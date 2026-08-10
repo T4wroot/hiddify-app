@@ -76,7 +76,7 @@ jobs:
           - platform: windows
             os: windows-latest
             aarch: amd64
-            targets: exe,msix,zip
+            targets: exe,zip
 
           - platform: linux
             os: ubuntu-22.04
@@ -416,6 +416,7 @@ jobs:
           gitchangelog "${prelease}.." >> release.md  2>&1 || echo "Error in gitchangelog"
           echo -e "\n\n</details>">>release.md
       - name: Create or Update Draft Release
+        continue-on-error: true
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -427,6 +428,7 @@ jobs:
           prerelease: true
 
       - name: Create or Update Draft Release
+        continue-on-error: true
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_HIDDIFY_APP_REPO }}
