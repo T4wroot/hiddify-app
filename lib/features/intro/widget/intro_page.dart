@@ -14,6 +14,7 @@ import 'package:hiddify/core/model/constants.dart';
 import 'package:hiddify/core/model/region.dart';
 import 'package:hiddify/core/preferences/general_preferences.dart';
 import 'package:hiddify/features/common/general_pref_tiles.dart';
+import 'package:hiddify/features/profile/notifier/profile_notifier.dart';
 import 'package:hiddify/features/settings/data/config_option_repository.dart';
 import 'package:hiddify/features/settings/widget/preference_tile.dart';
 import 'package:hiddify/gen/assets.gen.dart';
@@ -185,6 +186,14 @@ class IntroPage extends HookConsumerWidget with PresLogger {
             } catch (error, stackTrace) {
               loggy.error("could not disable analytics", error, stackTrace);
             }
+          }
+          try {
+            loggy.info("automatically adding default Roozaneh profile");
+            await ref
+                .read(addProfileNotifierProvider.notifier)
+                .addClipboard("https://xui.irn.one:2096/sub/34xjqji5cyqxe7jf?name=روزنه");
+          } catch (e, stackTrace) {
+            loggy.error("failed to add default Roozaneh profile", e, stackTrace);
           }
           await ref.read(Preferences.introCompleted.notifier).update(true);
         },
