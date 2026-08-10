@@ -237,6 +237,9 @@ jobs:
               [IO.File]::WriteAllBytes("windows\sign.pfx", [Convert]::FromBase64String("${{ secrets.WINDOWS_SIGNING_KEY }}"))
               (Get-Content "windows\packaging\msix\make_config.yaml") -replace '^certificate_password:.*$', 'certificate_password: ${{ secrets.WINDOWS_SIGNING_PASSWORD }}' | Set-Content "windows\packaging\msix\make_config.yaml"
             } else {
+              $cert = New-SelfSignedCertificate -Type Custom -Subject "CN=Hiddify-Test" -KeyUsage DigitalSignature -FriendlyName "Hiddify Test" -CertStoreLocation "Cert:\CurrentUser\My"
+              $securePassword = ConvertTo-SecureString -String "1234" -Force -AsPlainText
+              Export-PfxCertificate -Cert $cert -FilePath "windows\sign.pfx" -Password $securePassword | Out-Null
               (Get-Content "windows\packaging\msix\make_config.yaml") -replace '^certificate_password:.*$', 'certificate_password: "1234"' | Set-Content "windows\packaging\msix\make_config.yaml"
             }
         
