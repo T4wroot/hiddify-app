@@ -231,9 +231,14 @@ jobs:
 
       - name: Setup Windows Signing Properties
         if: ${{ inputs.upload-artifact && startsWith(matrix.platform,'windows') }}
+        shell: pwsh
         run: |
-            [IO.File]::WriteAllBytes("windows\sign.pfx", [Convert]::FromBase64String("${{ secrets.WINDOWS_SIGNING_KEY }}"))
-            (Get-Content "windows\packaging\msix\make_config.yaml") -replace '^certificate_password:.*$', 'certificate_password: ${{ secrets.WINDOWS_SIGNING_PASSWORD }}' | Set-Content "windows\packaging\msix\make_config.yaml"
+            if ("${{ secrets.WINDOWS_SIGNING_KEY }}") {
+              [IO.File]::WriteAllBytes("windows\sign.pfx", [Convert]::FromBase64String("${{ secrets.WINDOWS_SIGNING_KEY }}"))
+              (Get-Content "windows\packaging\msix\make_config.yaml") -replace '^certificate_password:.*$', 'certificate_password: ${{ secrets.WINDOWS_SIGNING_PASSWORD }}' | Set-Content "windows\packaging\msix\make_config.yaml"
+            } else {
+              (Get-Content "windows\packaging\msix\make_config.yaml") -replace '^certificate_password:.*$', 'certificate_password: "1234"' | Set-Content "windows\packaging\msix\make_config.yaml"
+            }
         
       # - name: Temporary disable Permission Handler for windows due to its issue in permission
       #   if: ${{ startsWith(matrix.platform,'windows') }}
