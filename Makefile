@@ -52,7 +52,7 @@ LIB_NAME=hiddify-core
 ifeq ($(CHANNEL),prod)
 	CORE_URL=https://github.com/hiddify/hiddify-core/releases/download/v$(core.version)
 else
-	CORE_URL=https://github.com/hiddify/hiddify-core/releases/download/draft
+	CORE_URL=https://github.com/hiddify/hiddify-core/releases/download/v$(core.version)
 endif
 
 ifeq ($(CHANNEL),prod)
