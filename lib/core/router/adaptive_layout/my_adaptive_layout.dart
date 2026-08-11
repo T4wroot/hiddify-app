@@ -70,9 +70,52 @@ class MyAdaptiveLayout extends HookConsumerWidget {
                       unselectedLabelTextStyle: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                       extended: Breakpoint(context).isDesktop(),
                       destinations: _navRailDests(_actions(t, showProfilesAction, isMobileBreakpoint)),
-                      selectedIndex: navigationShell.currentIndex,
-                      onDestinationSelected: (index) => _onTap(context, index),
-                      trailing: null,
+                      selectedIndex: _getSelectedIndex(isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex),
+                      trailing: Breakpoint(context).isDesktop()
+                          ? Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Icon(Icons.wb_sunny_rounded, color: Color(0xFFFF7A3C), size: 24),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            "روزنه",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Theme.of(context).colorScheme.onSurface,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Text(
+                                          "v 4.1.2 dev",
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          : null,
                     ),
                   ),
                   Expanded(child: navigationShell),
@@ -82,9 +125,9 @@ class MyAdaptiveLayout extends HookConsumerWidget {
             ? FocusScope(
                 node: navScopeNode,
                 child: NavigationBar(
-                  selectedIndex: navigationShell.currentIndex <= 1 ? navigationShell.currentIndex : 0,
+                  selectedIndex: _getSelectedIndex(isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex),
                   destinations: _navDests(_actions(t, showProfilesAction, isMobileBreakpoint)),
-                  onDestinationSelected: (index) => _onTap(context, index),
+                  onDestinationSelected: (index) => _onTap(context, index, isMobileBreakpoint, showProfilesAction),
                 ),
               )
             : null,
@@ -92,9 +135,28 @@ class MyAdaptiveLayout extends HookConsumerWidget {
     );
   }
 
+  int _getSelectedIndex(bool isMobileBreakpoint, bool showProfilesAction, int currentBranchIndex) {
+    final currentBranchName = getNameOfBranch(isMobileBreakpoint, showProfilesAction, currentBranchIndex);
+    return switch (currentBranchName) {
+      'home' => 0,
+      'settings' => 1,
+      'about' => 2,
+      _ => 0,
+    };
+  }
+
   // shell route action onTap
-  void _onTap(BuildContext context, int index) {
-    navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+  void _onTap(BuildContext context, int actionIndex, bool isMobileBreakpoint, bool showProfilesAction) {
+    final targetBranchName = switch (actionIndex) {
+      0 => 'home',
+      1 => 'settings',
+      2 => 'about',
+      _ => 'home',
+    };
+    final realBranchIndex = getIndexOfBranch(isMobileBreakpoint, showProfilesAction, targetBranchName);
+    if (realBranchIndex >= 0) {
+      navigationShell.goBranch(realBranchIndex, initialLocation: realBranchIndex == navigationShell.currentIndex);
+    }
   }
 
   List<ShellRouteAction> _actions(Translations t, bool showProfilesAction, bool isMobileBreakpoint) => [

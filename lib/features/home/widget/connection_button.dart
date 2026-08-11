@@ -204,17 +204,18 @@ class _ConnectionButton extends StatelessWidget {
   final AssetGenImage image;
   final bool useImage;
   final String secureLabel;
-
   final Color newButtonColor;
-
   final bool animated;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isConnected = label.contains("متصل") || label.contains("Connected");
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // CircleDesignWidget(newButtonColor: newButtonColor, onTap: onTap, animated: animated),
+        // Top Status Circle (Sun or Green Checkmark)
         Semantics(
           button: true,
           enabled: enabled,
@@ -227,12 +228,14 @@ class _ConnectionButton extends StatelessWidget {
                 BoxShadow(
                   blurRadius: 28,
                   spreadRadius: 2,
-                  color: buttonColor.withValues(alpha: .4),
+                  color: isConnected
+                      ? const Color(0xFF22C55E).withValues(alpha: 0.25)
+                      : const Color(0xFFFF7A3C).withValues(alpha: 0.25),
                 ),
               ],
             ),
-            width: 156,
-            height: 156,
+            width: 140,
+            height: 140,
             child: Material(
               key: const ValueKey("home_connection_button"),
               shape: const CircleBorder(),
@@ -241,44 +244,89 @@ class _ConnectionButton extends StatelessWidget {
                 focusColor: Colors.grey,
                 onTap: onTap,
                 child: Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: TweenAnimationBuilder(
-                    tween: ColorTween(end: buttonColor),
-                    duration: const Duration(milliseconds: 250),
-                    builder: (context, value, child) {
-                      return Assets.images.sunIcon.svg(
-                        colorFilter: ColorFilter.mode(value ?? buttonColor, BlendMode.srcIn),
-                      );
-                    },
-                  ),
+                  padding: const EdgeInsets.all(28),
+                  child: isConnected
+                      ? const Icon(
+                          Icons.check_circle_outline_rounded,
+                          color: Color(0xFF22C55E),
+                          size: 72,
+                        )
+                      : Assets.images.sunIcon.svg(
+                          colorFilter: const ColorFilter.mode(Color(0xFFFF7A3C), BlendMode.srcIn),
+                        ),
                 ),
               ),
-            ).animate(target: enabled ? 0 : 1).blurXY(end: 1),
-          ).animate(target: enabled ? 0 : 1).scaleXY(end: .88, curve: Curves.easeIn),
+            ),
+          ),
         ),
-        const Gap(16),
-        ExcludeSemantics(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedText(label, style: Theme.of(context).textTheme.titleMedium),
-              if (secureLabel.isNotEmpty) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // const Gap(8),
-                    Icon(FontAwesomeIcons.shieldHalved, size: 16, color: Theme.of(context).colorScheme.secondary),
-                    const Gap(4),
-                    Text(
-                      secureLabel,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.secondary),
-                    ),
-                  ],
+        const SizedBox(height: 20),
+
+        // Status Title & Subtitle
+        if (isConnected) ...[
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: "روزنه ",
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+                TextSpan(
+                  text: "متصل است",
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF22C55E),
+                  ),
                 ),
               ],
-            ],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            "اتصال شما امن و پایدار است",
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+            ),
+          ),
+        ] else ...[
+          Text(
+            "روزنه متصل نیست",
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            "برای اتصال ضربه بزنید",
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+            ),
+          ),
+        ],
+        const SizedBox(height: 20),
+
+        // Primary Action Button (Solid Orange Pill Button)
+        ElevatedButton(
+          onPressed: onTap,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFFF7A3C),
+            foregroundColor: Colors.white,
+            minimumSize: const Size(220, 48),
+            elevation: 4,
+            shadowColor: const Color(0xFFFF7A3C).withValues(alpha: 0.4),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+          child: Text(
+            isConnected ? "قطع اتصال" : "اتصال",
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

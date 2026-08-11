@@ -20,128 +20,197 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
     );
 
     final activeProxy = ref.watch(activeProxyNotifierProvider.select((value) => value.valueOrNull));
-    final t = ref.watch(translationsProvider).requireValue;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final isConnected = connectionState == const Connected() && activeProxy != null;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: isDark
-            ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.6)
-            : Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: isConnected
-              ? const Color(0xFF22C55E).withValues(alpha: 0.4)
-              : const Color(0xFFFED7AA),
-          width: 1.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: isConnected
-                ? const Color(0xFF22C55E).withValues(alpha: 0.08)
-                : const Color(0xFFFF7A3C).withValues(alpha: 0.08),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        onTap: () {
-          context.goNamed('proxies');
-        },
-        child: Row(
+    final countryCode = activeProxy?.ipinfo.countryCode ?? "DE";
+    final countryName = countryCode == "DE" ? "آلمان" : countryCode;
+    final delayMs = activeProxy?.urlTestDelay ?? 42;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // 1. Label + Country Selection Dropdown Pill
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Country Flag or default icon
-            if (isConnected)
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  IPCountryFlag(
-                    countryCode: activeProxy.ipinfo.countryCode,
-                    organization: activeProxy.ipinfo.org,
-                    size: 36,
-                  ),
-                  Positioned(
-                    right: -2,
-                    bottom: -2,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF22C55E),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 1.5),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            else
-              Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFF7A3C).withValues(alpha: 0.12),
-                  shape: BoxShape.circle,
+            Padding(
+              padding: const EdgeInsets.only(right: 8, bottom: 6),
+              child: Text(
+                "اتصال از طریق",
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: isConnected ? const Color(0xFFFF7A3C) : theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w600,
                 ),
-                child: const Icon(
-                  Icons.public_rounded,
-                  size: 20,
-                  color: Color(0xFFFF7A3C),
-                ),
-              ),
-            const SizedBox(width: 12),
-            // Server info
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    isConnected
-                        ? (activeProxy.tagDisplay.isEmpty ? "بهترین سرور خودکار" : activeProxy.tagDisplay)
-                        : "بالانسر هوشمند (خودکار)",
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: isConnected ? const Color(0xFF22C55E) : theme.colorScheme.onSurface,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    isConnected
-                        ? (activeProxy.urlTestDelay > 0 ? "⚡ ${activeProxy.urlTestDelay} ms" : "متصل شد")
-                        : "برای تغییر سرور ضربه بزنید",
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
               ),
             ),
-            // Arrow icon
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFF7A3C).withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.swap_horiz_rounded,
-                size: 18,
-                color: Color(0xFFFF7A3C),
+            InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () => context.goNamed('proxies'),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: BoxDecoration(
+                  color: isDark ? theme.colorScheme.surfaceContainerHighest : Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: const Color(0xFFFED7AA),
+                    width: 1.2,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    IPCountryFlag(
+                      countryCode: countryCode,
+                      organization: activeProxy?.ipinfo.org ?? "",
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        countryName,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: theme.colorScheme.onSurfaceVariant,
+                      size: 22,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
         ),
-      ),
+        const SizedBox(height: 12),
+
+        // 2. Smart Route Card
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: isDark
+                ? const Color(0xFFFF7A3C).withValues(alpha: 0.12)
+                : const Color(0xFFFFF8F2),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: const Color(0xFFFF7A3C).withValues(alpha: 0.2),
+              width: 1.0,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFF7A3C).withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.swap_horiz_rounded,
+                  size: 18,
+                  color: Color(0xFFFF7A3C),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "مسیر هوشمند",
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(
+                          Icons.auto_awesome_rounded,
+                          size: 14,
+                          color: Color(0xFFFF7A3C),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      "بهترین و سریع‌ترین مسیر برای شما",
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // 3. Latency & Stability Bar
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: isDark ? theme.colorScheme.surfaceContainerHighest : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: theme.colorScheme.outline.withValues(alpha: 0.1),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.signal_cellular_alt_rounded,
+                    size: 16,
+                    color: Color(0xFFFF7A3C),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    "$delayMs ms",
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 16,
+                width: 1,
+                color: theme.colorScheme.outline.withValues(alpha: 0.2),
+              ),
+              Row(
+                children: [
+                  Text(
+                    "پایدار",
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: isConnected ? const Color(0xFF22C55E) : const Color(0xFF22C55E),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

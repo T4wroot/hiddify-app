@@ -75,36 +75,56 @@ class HomePage extends HookConsumerWidget {
             Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxWidth: 600,
+                  maxWidth: 540,
                 ),
-                child: CustomScrollView(
-                  slivers: [
-                    MultiSliver(
-                      children: [
-                        const SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ConnectionButton(),
-                                    ActiveProxyDelayIndicator(),
-                                    LiveSpeedGauge(),
-                                  ],
-                                ),
-                              ),
-                              ActiveProxyFooter(),
-                              Gap(16),
-                            ],
-                          ),
-                        ),
-                      ],
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                  decoration: BoxDecoration(
+                    color: theme.brightness == Brightness.dark
+                        ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.6)
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border.all(
+                      color: const Color(0xFFFED7AA).withValues(alpha: 0.8),
+                      width: 1.5,
                     ),
-                  ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFF7A3C).withValues(alpha: 0.05),
+                        blurRadius: 20,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: CustomScrollView(
+                    slivers: [
+                      MultiSliver(
+                        children: [
+                          const SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ConnectionButton(),
+                                      LiveSpeedGauge(),
+                                    ],
+                                  ),
+                                ),
+                                Gap(16),
+                                ActiveProxyFooter(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
