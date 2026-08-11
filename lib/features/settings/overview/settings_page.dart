@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hiddify/core/localization/translations.dart';
-import 'package:hiddify/core/router/dialog/dialog_notifier.dart';
-import 'package:hiddify/core/router/go_router/helper/active_breakpoint_notifier.dart';
-import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
-import 'package:hiddify/features/settings/notifier/config_option/config_option_notifier.dart';
-import 'package:hiddify/features/settings/notifier/reset_tunnel/reset_tunnel_notifier.dart';
-import 'package:hiddify/utils/utils.dart';
+import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
+import 'package:roozaneh/core/router/go_router/helper/active_breakpoint_notifier.dart';
+import 'package:roozaneh/features/profile/notifier/active_profile_notifier.dart';
+import 'package:roozaneh/features/settings/notifier/config_option/config_option_notifier.dart';
+import 'package:roozaneh/features/settings/notifier/reset_tunnel/reset_tunnel_notifier.dart';
+import 'package:roozaneh/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum ConfigOptionSection {

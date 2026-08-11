@@ -2,17 +2,17 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'package:hiddify/core/app_info/app_info_provider.dart';
-import 'package:hiddify/core/directories/directories_provider.dart';
-import 'package:hiddify/core/localization/translations.dart';
-import 'package:hiddify/core/model/constants.dart';
-import 'package:hiddify/core/model/failures.dart';
-import 'package:hiddify/core/router/dialog/dialog_notifier.dart';
-import 'package:hiddify/core/widget/adaptive_icon.dart';
-import 'package:hiddify/features/app_update/notifier/app_update_notifier.dart';
-import 'package:hiddify/features/app_update/notifier/app_update_state.dart';
-import 'package:hiddify/gen/assets.gen.dart';
-import 'package:hiddify/utils/utils.dart';
+import 'package:roozaneh/core/app_info/app_info_provider.dart';
+import 'package:roozaneh/core/directories/directories_provider.dart';
+import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/model/constants.dart';
+import 'package:roozaneh/core/model/failures.dart';
+import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
+import 'package:roozaneh/core/widget/adaptive_icon.dart';
+import 'package:roozaneh/features/app_update/notifier/app_update_notifier.dart';
+import 'package:roozaneh/features/app_update/notifier/app_update_state.dart';
+import 'package:roozaneh/gen/assets.gen.dart';
+import 'package:roozaneh/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AboutPage extends HookConsumerWidget {

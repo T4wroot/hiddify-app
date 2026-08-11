@@ -1,4 +1,4 @@
-import 'package:hiddify/core/db/db.dart';
+import 'package:roozaneh/core/db/db.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

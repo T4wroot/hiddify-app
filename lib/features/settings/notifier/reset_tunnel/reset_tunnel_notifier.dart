@@ -1,5 +1,5 @@
-import 'package:hiddify/hiddifycore/hiddify_core_service_provider.dart';
-import 'package:hiddify/utils/custom_loggers.dart';
+import 'package:roozaneh/hiddifycore/hiddify_core_service_provider.dart';
+import 'package:roozaneh/utils/custom_loggers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reset_tunnel_notifier.g.dart';

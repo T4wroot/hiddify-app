@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:hiddify/features/profile/data/profile_parser.dart';
-import 'package:hiddify/features/profile/model/profile_entity.dart';
-import 'package:hiddify/features/profile/model/profile_failure.dart';
+import 'package:roozaneh/features/profile/data/profile_parser.dart';
+import 'package:roozaneh/features/profile/model/profile_entity.dart';
+import 'package:roozaneh/features/profile/model/profile_failure.dart';
 import 'package:uuid/uuid.dart';
 
 /// Runs the real download → populate → parse flow for a remote profile from a

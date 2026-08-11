@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hiddify/core/localization/translations.dart';
-import 'package:hiddify/features/chain/model/chain_enum.dart';
-import 'package:hiddify/features/chain/overview/chain_timeline_arrow.dart';
-import 'package:hiddify/features/chain/overview/chain_timeline_header.dart';
+import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/features/chain/model/chain_enum.dart';
+import 'package:roozaneh/features/chain/overview/chain_timeline_arrow.dart';
+import 'package:roozaneh/features/chain/overview/chain_timeline_header.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ChainTimeline extends HookConsumerWidget {

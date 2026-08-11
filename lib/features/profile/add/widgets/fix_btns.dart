@@ -5,12 +5,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'package:hiddify/core/localization/translations.dart';
-import 'package:hiddify/core/model/constants.dart';
-import 'package:hiddify/core/router/dialog/dialog_notifier.dart';
-import 'package:hiddify/features/profile/add/widgets/widgets.dart';
-import 'package:hiddify/features/profile/notifier/profile_notifier.dart';
-import 'package:hiddify/utils/utils.dart';
+import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/model/constants.dart';
+import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
+import 'package:roozaneh/features/profile/add/widgets/widgets.dart';
+import 'package:roozaneh/features/profile/notifier/profile_notifier.dart';
+import 'package:roozaneh/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class FixBtns extends ConsumerWidget {

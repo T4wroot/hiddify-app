@@ -1,19 +1,19 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:hiddify/core/haptic/haptic_service.dart';
-import 'package:hiddify/core/model/constants.dart';
-import 'package:hiddify/core/preferences/general_preferences.dart';
-import 'package:hiddify/core/utils/throttler.dart';
-import 'package:hiddify/features/connection/notifier/connection_notifier.dart';
-import 'package:hiddify/features/proxy/data/proxy_data_providers.dart';
-import 'package:hiddify/features/proxy/data/proxy_repository.dart';
-import 'package:hiddify/features/proxy/model/ip_info_entity.dart' as oldipinfo;
-import 'package:hiddify/features/proxy/model/proxy_failure.dart';
-import 'package:hiddify/hiddifycore/generated/v2/hcore/hcore.pb.dart';
+import 'package:roozaneh/core/haptic/haptic_service.dart';
+import 'package:roozaneh/core/model/constants.dart';
+import 'package:roozaneh/core/preferences/general_preferences.dart';
+import 'package:roozaneh/core/utils/throttler.dart';
+import 'package:roozaneh/features/connection/notifier/connection_notifier.dart';
+import 'package:roozaneh/features/proxy/data/proxy_data_providers.dart';
+import 'package:roozaneh/features/proxy/data/proxy_repository.dart';
+import 'package:roozaneh/features/proxy/model/ip_info_entity.dart' as oldipinfo;
+import 'package:roozaneh/features/proxy/model/proxy_failure.dart';
+import 'package:roozaneh/hiddifycore/generated/v2/hcore/hcore.pb.dart';
 
-import 'package:hiddify/utils/riverpod_utils.dart';
-import 'package:hiddify/utils/utils.dart';
+import 'package:roozaneh/utils/riverpod_utils.dart';
+import 'package:roozaneh/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 

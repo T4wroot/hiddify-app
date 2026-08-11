@@ -1,6 +1,6 @@
-import 'package:hiddify/core/preferences/preferences_provider.dart';
-import 'package:hiddify/gen/translations.g.dart';
-import 'package:hiddify/utils/custom_loggers.dart';
+import 'package:roozaneh/core/preferences/preferences_provider.dart';
+import 'package:roozaneh/gen/translations.g.dart';
+import 'package:roozaneh/utils/custom_loggers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'locale_preferences.g.dart';

@@ -1,11 +1,11 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hiddify/core/localization/translations.dart';
-import 'package:hiddify/core/model/constants.dart';
-import 'package:hiddify/core/widget/shimmer_skeleton.dart';
-import 'package:hiddify/features/proxy/active/active_proxy_notifier.dart';
-import 'package:hiddify/utils/custom_loggers.dart';
+import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/model/constants.dart';
+import 'package:roozaneh/core/widget/shimmer_skeleton.dart';
+import 'package:roozaneh/features/proxy/active/active_proxy_notifier.dart';
+import 'package:roozaneh/utils/custom_loggers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ActiveProxyDelayIndicator extends HookConsumerWidget with InfraLogger {

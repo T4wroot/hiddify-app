@@ -1,4 +1,4 @@
-import 'package:hiddify/core/router/deep_linking/url_protocol/protocol.dart';
+import 'package:roozaneh/core/router/deep_linking/url_protocol/protocol.dart';
 
 class WindowsProtocolHandler extends ProtocolHandler {
   @override

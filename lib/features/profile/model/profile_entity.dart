@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:dartx/dartx.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hiddify/features/profile/data/profile_parser.dart';
+import 'package:roozaneh/features/profile/data/profile_parser.dart';
 
 part 'profile_entity.freezed.dart';
 part 'profile_entity.g.dart';

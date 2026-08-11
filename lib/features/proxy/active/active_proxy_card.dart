@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hiddify/core/localization/translations.dart';
-import 'package:hiddify/core/router/dialog/dialog_notifier.dart';
-import 'package:hiddify/features/connection/model/connection_status.dart';
-import 'package:hiddify/features/connection/notifier/connection_notifier.dart';
-import 'package:hiddify/features/proxy/active/active_proxy_notifier.dart';
-import 'package:hiddify/features/proxy/active/ip_widget.dart';
-import 'package:hiddify/hiddifycore/generated/v2/hcore/hcore.pb.dart';
-import 'package:hiddify/utils/custom_loggers.dart';
+import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
+import 'package:roozaneh/features/connection/model/connection_status.dart';
+import 'package:roozaneh/features/connection/notifier/connection_notifier.dart';
+import 'package:roozaneh/features/proxy/active/active_proxy_notifier.dart';
+import 'package:roozaneh/features/proxy/active/ip_widget.dart';
+import 'package:roozaneh/hiddifycore/generated/v2/hcore/hcore.pb.dart';
+import 'package:roozaneh/utils/custom_loggers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ActiveProxyFooter extends ConsumerWidget with InfraLogger {

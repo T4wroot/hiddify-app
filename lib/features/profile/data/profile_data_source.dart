@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:hiddify/core/db/db.dart';
-import 'package:hiddify/features/profile/model/profile_sort_enum.dart';
-import 'package:hiddify/utils/utils.dart';
+import 'package:roozaneh/core/db/db.dart';
+import 'package:roozaneh/features/profile/model/profile_sort_enum.dart';
+import 'package:roozaneh/utils/utils.dart';
 import 'package:loggy/loggy.dart';
 
 part 'profile_data_source.g.dart';

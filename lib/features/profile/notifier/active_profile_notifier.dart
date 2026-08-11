@@ -1,7 +1,7 @@
-import 'package:hiddify/features/profile/data/profile_data_mapper.dart';
-import 'package:hiddify/features/profile/data/profile_data_providers.dart';
-import 'package:hiddify/features/profile/model/profile_entity.dart';
-import 'package:hiddify/utils/utils.dart';
+import 'package:roozaneh/features/profile/data/profile_data_mapper.dart';
+import 'package:roozaneh/features/profile/data/profile_data_providers.dart';
+import 'package:roozaneh/features/profile/model/profile_entity.dart';
+import 'package:roozaneh/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hiddify/singbox/model/singbox_config_enum.dart';
+import 'package:roozaneh/singbox/model/singbox_config_enum.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ChainModeIcon extends HookConsumerWidget {

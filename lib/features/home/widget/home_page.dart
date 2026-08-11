@@ -1,15 +1,15 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hiddify/core/app_info/app_info_provider.dart';
-import 'package:hiddify/core/localization/translations.dart';
-import 'package:hiddify/core/router/bottom_sheets/bottom_sheets_notifier.dart';
-import 'package:hiddify/features/home/widget/connection_button.dart';
-import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
-import 'package:hiddify/features/profile/widget/profile_tile.dart';
-import 'package:hiddify/features/proxy/active/active_proxy_card.dart';
-import 'package:hiddify/features/proxy/active/active_proxy_delay_indicator.dart';
-import 'package:hiddify/gen/assets.gen.dart';
+import 'package:roozaneh/core/app_info/app_info_provider.dart';
+import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/router/bottom_sheets/bottom_sheets_notifier.dart';
+import 'package:roozaneh/features/home/widget/connection_button.dart';
+import 'package:roozaneh/features/profile/notifier/active_profile_notifier.dart';
+import 'package:roozaneh/features/profile/widget/profile_tile.dart';
+import 'package:roozaneh/features/proxy/active/active_proxy_card.dart';
+import 'package:roozaneh/features/proxy/active/active_proxy_delay_indicator.dart';
+import 'package:roozaneh/gen/assets.gen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 

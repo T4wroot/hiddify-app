@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hiddify/bootstrap.dart';
-import 'package:hiddify/core/model/environment.dart';
+import 'package:roozaneh/bootstrap.dart';
+import 'package:roozaneh/core/model/environment.dart';
 
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

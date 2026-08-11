@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:dartx/dartx.dart';
 
-import 'package:hiddify/core/haptic/haptic_service.dart';
-import 'package:hiddify/core/localization/translations.dart';
-import 'package:hiddify/core/preferences/preferences_provider.dart';
-import 'package:hiddify/core/utils/preferences_utils.dart';
-import 'package:hiddify/features/connection/notifier/connection_notifier.dart';
-import 'package:hiddify/features/proxy/data/proxy_data_providers.dart';
-import 'package:hiddify/features/proxy/model/proxy_failure.dart';
-import 'package:hiddify/hiddifycore/generated/v2/hcore/hcore.pb.dart';
+import 'package:roozaneh/core/haptic/haptic_service.dart';
+import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/preferences/preferences_provider.dart';
+import 'package:roozaneh/core/utils/preferences_utils.dart';
+import 'package:roozaneh/features/connection/notifier/connection_notifier.dart';
+import 'package:roozaneh/features/proxy/data/proxy_data_providers.dart';
+import 'package:roozaneh/features/proxy/model/proxy_failure.dart';
+import 'package:roozaneh/hiddifycore/generated/v2/hcore/hcore.pb.dart';
 
-import 'package:hiddify/utils/riverpod_utils.dart';
-import 'package:hiddify/utils/utils.dart';
+import 'package:roozaneh/utils/riverpod_utils.dart';
+import 'package:roozaneh/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'proxies_overview_notifier.g.dart';
