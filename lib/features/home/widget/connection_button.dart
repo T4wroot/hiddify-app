@@ -226,7 +226,7 @@ class _ConnectionButton extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  blurRadius: 28,
+                  blurRadius: 20,
                   spreadRadius: 2,
                   color: isConnected
                       ? const Color(0xFF22C55E).withValues(alpha: 0.25)
@@ -234,8 +234,8 @@ class _ConnectionButton extends StatelessWidget {
                 ),
               ],
             ),
-            width: 140,
-            height: 140,
+            width: 110,
+            height: 110,
             child: Material(
               key: const ValueKey("home_connection_button"),
               shape: const CircleBorder(),
@@ -244,12 +244,12 @@ class _ConnectionButton extends StatelessWidget {
                 focusColor: Colors.grey,
                 onTap: onTap,
                 child: Padding(
-                  padding: const EdgeInsets.all(28),
+                  padding: const EdgeInsets.all(22),
                   child: isConnected
                       ? const Icon(
                           Icons.check_circle_outline_rounded,
                           color: Color(0xFF22C55E),
-                          size: 72,
+                          size: 56,
                         )
                       : Assets.images.sunIcon.svg(
                           colorFilter: const ColorFilter.mode(Color(0xFFFF7A3C), BlendMode.srcIn),
@@ -259,7 +259,7 @@ class _ConnectionButton extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
 
         // Status Title & Subtitle
         if (isConnected) ...[
@@ -268,14 +268,14 @@ class _ConnectionButton extends StatelessWidget {
               children: [
                 TextSpan(
                   text: "روزنه ",
-                  style: theme.textTheme.headlineSmall?.copyWith(
+                  style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: theme.colorScheme.onSurface,
                   ),
                 ),
                 TextSpan(
                   text: "متصل است",
-                  style: theme.textTheme.headlineSmall?.copyWith(
+                  style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFF22C55E),
                   ),
@@ -283,30 +283,30 @@ class _ConnectionButton extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           Text(
             "اتصال شما امن و پایدار است",
-            style: theme.textTheme.bodySmall?.copyWith(
+            style: theme.textTheme.labelMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ] else ...[
           Text(
             "روزنه متصل نیست",
-            style: theme.textTheme.headlineSmall?.copyWith(
+            style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: theme.colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           Text(
             "برای اتصال ضربه بزنید",
-            style: theme.textTheme.bodySmall?.copyWith(
+            style: theme.textTheme.labelMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ],
-        const SizedBox(height: 20),
+        const SizedBox(height: 12),
 
         // Primary Action Button (Solid Orange Pill Button)
         ElevatedButton(
@@ -314,11 +314,11 @@ class _ConnectionButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFFFF7A3C),
             foregroundColor: Colors.white,
-            minimumSize: const Size(220, 48),
-            elevation: 4,
-            shadowColor: const Color(0xFFFF7A3C).withValues(alpha: 0.4),
+            minimumSize: const Size(180, 42),
+            elevation: 3,
+            shadowColor: const Color(0xFFFF7A3C).withValues(alpha: 0.35),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(22),
             ),
           ),
           child: Text(

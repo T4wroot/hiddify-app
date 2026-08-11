@@ -140,7 +140,8 @@ class MyAdaptiveLayout extends HookConsumerWidget {
     return switch (currentBranchName) {
       'home' => 0,
       'settings' => 1,
-      'about' => 2,
+      'about' => 3,
+      'logs' => 4,
       _ => 0,
     };
   }
@@ -150,7 +151,8 @@ class MyAdaptiveLayout extends HookConsumerWidget {
     final targetBranchName = switch (actionIndex) {
       0 => 'home',
       1 => 'settings',
-      2 => 'about',
+      3 => 'about',
+      4 => 'logs',
       _ => 'home',
     };
     final realBranchIndex = getIndexOfBranch(isMobileBreakpoint, showProfilesAction, targetBranchName);
@@ -160,9 +162,12 @@ class MyAdaptiveLayout extends HookConsumerWidget {
   }
 
   List<ShellRouteAction> _actions(Translations t, bool showProfilesAction, bool isMobileBreakpoint) => [
-    ShellRouteAction(Icons.power_settings_new_rounded, t.pages.home.title),
+    ShellRouteAction(Icons.home_rounded, t.pages.home.title),
     ShellRouteAction(Icons.settings_rounded, t.pages.settings.title),
-    if (!isMobileBreakpoint) ShellRouteAction(Icons.info_rounded, t.pages.about.title),
+    ShellRouteAction(Icons.chat_bubble_outline_rounded, "بازخورد"),
+    if (!isMobileBreakpoint) ShellRouteAction(Icons.info_outline_rounded, t.pages.about.title),
+    if (!isMobileBreakpoint) ShellRouteAction(Icons.bar_chart_rounded, t.pages.logs.title),
+    ShellRouteAction(Icons.language_rounded, "زبان"),
   ];
 
   List<NavigationDestination> _navDests(List<ShellRouteAction> actions) =>
