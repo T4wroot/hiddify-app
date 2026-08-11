@@ -23,9 +23,21 @@ class ProxyTile extends HookConsumerWidget with PresLogger {
     // Clean display name
     String displayName = proxy.tagDisplay;
     if (displayName.contains("balance") || displayName.contains("round-robin")) {
-      displayName = "بالانسر هوشمند (خودکار)";
+      displayName = "بالانسر هوشمند (بهترین سرور خودکار)";
     } else if (displayName.contains("lowest")) {
       displayName = "کم‌ترین پینگ خودکار";
+    } else {
+      final country = (proxy.ipinfo.countryCode == "DE" || proxy.ipinfo.countryCode.isEmpty) ? "آلمان" : proxy.ipinfo.countryCode;
+      if (displayName.contains("Reality") || displayName.contains("REALITY")) {
+        displayName = "سرور Reality $country";
+      } else if (displayName.contains("Shadow")) {
+        displayName = "سرور Shadowsocks $country";
+      } else if (displayName.contains("CDN")) {
+        displayName = "سرور CDN $country";
+      } else {
+        final cleanTag = displayName.replaceAll(RegExp(r'^[A-Z]{2}\s*[-=]*\s*'), '').replaceAll(RegExp(r'[\(\[\{].*?[\)\]\}]'), '').trim();
+        displayName = cleanTag.isNotEmpty ? "سرور $country ($cleanTag)" : "سرور پرسرعت $country";
+      }
     }
 
     final hasValidPing = ConnectionConst.isValidDelay(proxy.urlTestDelay);
