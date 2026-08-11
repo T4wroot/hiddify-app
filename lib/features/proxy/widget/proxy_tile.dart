@@ -18,51 +18,106 @@ class ProxyTile extends HookConsumerWidget with PresLogger {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
-    return ListTile(
-      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: Text(
-        proxy.tagDisplay,
-        overflow: TextOverflow.ellipsis,
-        style: PlatformUtils.isWindows ? const TextStyle(fontFamily: FontFamily.emoji) : null,
+    // Clean display name
+    String displayName = proxy.tagDisplay;
+    if (displayName.contains("balance") || displayName.contains("round-robin")) {
+      displayName = "بالانسر هوشمند (خودکار)";
+    } else if (displayName.contains("lowest")) {
+      displayName = "کم‌ترین پینگ خودکار";
+    }
+
+    final hasValidPing = ConnectionConst.isValidDelay(proxy.urlTestDelay);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      decoration: BoxDecoration(
+        color: selected
+            ? (isDark ? const Color(0xFFF26522).withValues(alpha: 0.18) : const Color(0xFFFFF0E6))
+            : (isDark ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.4) : Colors.white),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: selected
+              ? const Color(0xFFF26522)
+              : theme.colorScheme.outline.withValues(alpha: 0.12),
+          width: selected ? 1.5 : 1.0,
+        ),
+        boxShadow: selected
+            ? [
+                BoxShadow(
+                  color: const Color(0xFFF26522).withValues(alpha: 0.12),
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ]
+            : null,
       ),
-      leading: IPCountryFlag(
-        countryCode: proxy.ipinfo.countryCode,
-        organization: proxy.ipinfo.org,
-        size: 40,
-        padding: const EdgeInsetsDirectional.only(end: 8),
-      ),
-      subtitle: Text.rich(
-        TextSpan(
-          text: proxy.type,
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        leading: IPCountryFlag(
+          countryCode: proxy.ipinfo.countryCode,
+          organization: proxy.ipinfo.org,
+          size: 36,
+        ),
+        title: Text(
+          displayName,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: selected ? FontWeight.bold : FontWeight.w600,
+            color: selected ? const Color(0xFFF26522) : theme.colorScheme.onSurface,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Text(
+          proxy.type.toUpperCase(),
+          style: theme.textTheme.labelSmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+            letterSpacing: 0.5,
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            if (proxy.isGroup)
-              TextSpan(
-                text: ' (${proxy.groupSelectedTagDisplay.trim()})',
-                style: Theme.of(context).textTheme.bodySmall,
+            if (proxy.urlTestDelay > 0)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: delayColor(context, proxy.urlTestDelay).withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.bolt_rounded,
+                      size: 14,
+                      color: delayColor(context, proxy.urlTestDelay),
+                    ),
+                    const SizedBox(width: 2),
+                    Text(
+                      hasValidPing ? "${proxy.urlTestDelay} ms" : "خطا",
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: delayColor(context, proxy.urlTestDelay),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+            const SizedBox(width: 8),
+            Icon(
+              selected ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
+              color: selected ? const Color(0xFFF26522) : theme.colorScheme.outline.withValues(alpha: 0.4),
+              size: 22,
+            ),
           ],
         ),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        selected: selected,
+        onTap: onTap,
+        onLongPress: () async => await ref.read(dialogNotifierProvider.notifier).showProxyInfo(outboundInfo: proxy),
       ),
-      trailing: Column(
-        children: [
-          if (proxy.urlTestDelay != 0)
-            Text(
-              ConnectionConst.isValidDelay(proxy.urlTestDelay) ? proxy.urlTestDelay.toString() : "×",
-              style: TextStyle(color: delayColor(context, proxy.urlTestDelay)),
-            ),
-
-          if (proxy.download > 0) Text("⬩", style: Theme.of(context).textTheme.bodySmall),
-        ],
-      ),
-
-      selected: selected,
-      selectedTileColor: theme.colorScheme.primaryContainer,
-      onTap: onTap,
-      onLongPress: () async => await ref.read(dialogNotifierProvider.notifier).showProxyInfo(outboundInfo: proxy),
-      horizontalTitleGap: 4,
     );
   }
 
