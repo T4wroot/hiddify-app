@@ -5,13 +5,9 @@ import 'package:roozaneh/core/app_info/app_info_provider.dart';
 import 'package:roozaneh/core/localization/translations.dart';
 import 'package:roozaneh/core/router/bottom_sheets/bottom_sheets_notifier.dart';
 import 'package:roozaneh/features/home/widget/connection_button.dart';
-import 'package:roozaneh/features/profile/notifier/active_profile_notifier.dart';
-import 'package:roozaneh/features/profile/widget/profile_tile.dart';
 import 'package:roozaneh/features/proxy/active/active_proxy_card.dart';
-import 'package:roozaneh/features/proxy/active/active_proxy_delay_indicator.dart';
 import 'package:roozaneh/gen/assets.gen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sliver_tools/sliver_tools.dart';
 
 import 'package:roozaneh/features/stats/widget/live_speed_gauge.dart';
 
@@ -60,75 +56,57 @@ class HomePage extends HookConsumerWidget {
           image: DecorationImage(
             image: const AssetImage('assets/images/world_map.png'),
             fit: BoxFit.cover,
-            opacity: 0.09,
+            opacity: 0.07,
             colorFilter: theme.brightness == Brightness.dark
-                ? ColorFilter.mode(Colors.white.withValues(alpha: .15), BlendMode.srcIn)
+                ? ColorFilter.mode(Colors.white.withValues(alpha: .12), BlendMode.srcIn)
                 : ColorFilter.mode(
                     Colors.grey.withValues(alpha: 1),
                     BlendMode.srcATop,
                   ),
           ),
         ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: 540,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 520),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              decoration: BoxDecoration(
+                color: theme.brightness == Brightness.dark
+                    ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.85)
+                    : Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: const Color(0xFFFED7AA),
+                  width: 1.2,
                 ),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-                  decoration: BoxDecoration(
-                    color: theme.brightness == Brightness.dark
-                        ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.6)
-                        : Colors.white,
-                    borderRadius: BorderRadius.circular(28),
-                    border: Border.all(
-                      color: const Color(0xFFFED7AA).withValues(alpha: 0.8),
-                      width: 1.5,
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFFFF7A3C).withValues(alpha: 0.06),
+                    blurRadius: 24,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ConnectionButton(),
+                        LiveSpeedGauge(),
+                      ],
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFFF7A3C).withValues(alpha: 0.05),
-                        blurRadius: 20,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
                   ),
-                  child: CustomScrollView(
-                    slivers: [
-                      MultiSliver(
-                        children: [
-                          const SliverFillRemaining(
-                            hasScrollBody: false,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ConnectionButton(),
-                                      LiveSpeedGauge(),
-                                    ],
-                                  ),
-                                ),
-                                Gap(16),
-                                ActiveProxyFooter(),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                  Gap(16),
+                  ActiveProxyFooter(),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
