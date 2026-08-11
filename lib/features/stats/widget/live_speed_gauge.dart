@@ -26,9 +26,11 @@ class LiveSpeedGauge extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        color: theme.brightness == Brightness.dark
+            ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5)
+            : Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.1)),
+        border: Border.all(color: const Color(0xFFFED7AA).withValues(alpha: 0.6)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

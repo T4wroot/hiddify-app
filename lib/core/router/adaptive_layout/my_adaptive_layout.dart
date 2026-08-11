@@ -62,6 +62,12 @@ class MyAdaptiveLayout extends HookConsumerWidget {
                   FocusScope(
                     node: navScopeNode,
                     child: NavigationRail(
+                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                      indicatorColor: const Color(0xFFFF7A3C).withValues(alpha: 0.15),
+                      selectedIconTheme: const IconThemeData(color: Color(0xFFFF7A3C)),
+                      selectedLabelTextStyle: const TextStyle(color: Color(0xFFFF7A3C), fontWeight: FontWeight.bold),
+                      unselectedIconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      unselectedLabelTextStyle: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                       extended: Breakpoint(context).isDesktop(),
                       destinations: _navRailDests(_actions(t, showProfilesAction, isMobileBreakpoint)),
                       selectedIndex: navigationShell.currentIndex,
