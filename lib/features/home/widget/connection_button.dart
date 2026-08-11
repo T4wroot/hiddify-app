@@ -223,10 +223,16 @@ class _ConnectionButton extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              boxShadow: [BoxShadow(blurRadius: 16, color: buttonColor.withValues(alpha: .5))],
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 28,
+                  spreadRadius: 2,
+                  color: buttonColor.withValues(alpha: .4),
+                ),
+              ],
             ),
-            width: 148,
-            height: 148,
+            width: 156,
+            height: 156,
             child: Material(
               key: const ValueKey("home_connection_button"),
               shape: const CircleBorder(),
@@ -235,16 +241,14 @@ class _ConnectionButton extends StatelessWidget {
                 focusColor: Colors.grey,
                 onTap: onTap,
                 child: Padding(
-                  padding: const EdgeInsets.all(36),
+                  padding: const EdgeInsets.all(32),
                   child: TweenAnimationBuilder(
                     tween: ColorTween(end: buttonColor),
                     duration: const Duration(milliseconds: 250),
                     builder: (context, value, child) {
-                      if (useImage) {
-                        return image.image();
-                      } else {
-                        return Assets.images.logo.svg(colorFilter: ColorFilter.mode(value!, BlendMode.srcIn));
-                      }
+                      return Assets.images.sunIcon.svg(
+                        colorFilter: ColorFilter.mode(value ?? buttonColor, BlendMode.srcIn),
+                      );
                     },
                   ),
                 ),
