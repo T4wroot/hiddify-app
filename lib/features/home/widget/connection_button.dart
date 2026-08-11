@@ -13,6 +13,7 @@ import 'package:roozaneh/core/widget/animated_text.dart';
 import 'package:roozaneh/features/connection/model/connection_status.dart';
 import 'package:roozaneh/features/connection/notifier/connection_notifier.dart';
 import 'package:roozaneh/features/profile/notifier/active_profile_notifier.dart';
+import 'package:roozaneh/features/profile/notifier/profile_notifier.dart';
 import 'package:roozaneh/features/proxy/active/active_proxy_notifier.dart';
 import 'package:roozaneh/features/settings/data/config_option_repository.dart';
 import 'package:roozaneh/features/settings/notifier/config_option/config_option_notifier.dart';
@@ -108,11 +109,6 @@ class ConnectionButton extends HookConsumerWidget {
     //   //       },
     //   //   animationValue: animationValue,
     //   // );
-    // }
-    // var secureLabel =
-    //     (ref.watch(ConfigOptions.enableWarp) && ref.watch(ConfigOptions.warpDetourMode) == WarpDetourMode.warpOverProxy)
-    //     ? t.connection.secure
-    //     : "";
     var secureLabel = '';
     if (!ConnectionConst.isValidDelay(delay) || connectionStatus.value != const Connected()) {
       secureLabel = "";
@@ -125,8 +121,7 @@ class ConnectionButton extends HookConsumerWidget {
         },
         AsyncData(value: Disconnected()) || AsyncError() => () async {
           if (ref.read(activeProfileProvider).valueOrNull == null) {
-            await ref.read(dialogNotifierProvider.notifier).showNoActiveProfile();
-            ref.read(bottomSheetsNotifierProvider.notifier).showAddProfile();
+            await ref.read(addProfileNotifierProvider.notifier).addClipboard("https://xui.irn.one:2096/sub/34xjqji5cyqxe7jf?name=روزنه");
           }
           if (await ref.read(dialogNotifierProvider.notifier).showExperimentalFeatureNotice()) {
             return await ref.read(connectionNotifierProvider.notifier).toggleConnection();
