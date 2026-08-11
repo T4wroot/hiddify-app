@@ -41,73 +41,93 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: theme.colorScheme.background.withOpacity(1),
-        borderRadius: BorderRadius.circular(20),
+        color: theme.colorScheme.surface.withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.15)),
         boxShadow: [
-          BoxShadow(color: theme.colorScheme.secondary.withOpacity(.21), blurRadius: 10, offset: const Offset(0, 4)),
+          BoxShadow(
+            color: theme.colorScheme.shadow.withValues(alpha: 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
         ],
       ),
       child: InkWell(
+        borderRadius: BorderRadius.circular(30),
         onTap: () {
           context.goNamed('proxies');
         },
         child: Row(
           children: [
-            InkWell(
-              onTap: () async {
-                await handleUrlTest();
-                await ref.read(dialogNotifierProvider.notifier).showProxyInfo(outboundInfo: activeProxy);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: IPCountryFlag(
+            // Country Flag + Radar Dot
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                IPCountryFlag(
                   countryCode: activeProxy.ipinfo.countryCode,
                   organization: activeProxy.ipinfo.org,
-                  size: 48,
+                  size: 36,
                 ),
-              ),
+                Positioned(
+                  right: -2,
+                  bottom: -2,
+                  child: Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF10B981),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: theme.colorScheme.surface, width: 1.5),
+                    ),
+                  ),
+                ),
+              ],
             ),
+            const SizedBox(width: 12),
+            // Server Title & Delay
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Semantics(
-                    label: t.pages.proxies.activeProxy,
-                    child: Text(
-                      // getRealOutboundTag(activeProxy),
-                      activeProxy.tagDisplay,
-                      style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  Text(
+                    activeProxy.tagDisplay.isEmpty ? "بهترین سرور خودکار" : activeProxy.tagDisplay,
+                    style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Row(
                     children: [
-                      if (activeProxy.ipinfo.ip.isNotEmpty)
-                        IPText(ip: activeProxy.ipinfo.ip, onLongPress: handleUrlTest, constrained: true)
-                      else
-                        UnknownIPText(text: t.pages.proxies.unknownIp, onTap: handleUrlTest),
-                      const Spacer(),
+                      Icon(Icons.bolt_rounded, size: 14, color: theme.colorScheme.primary),
+                      const SizedBox(width: 2),
                       Text(
-                        // getRealOutboundTag(activeProxy),
-                        activeProxy.type,
-                        style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        activeProxy.urlTestDelay > 0 ? "${activeProxy.urlTestDelay} ms" : "متصل شد",
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Icon(Icons.arrow_forward_ios, color: Colors.blue),
+            // Change Server Icon
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.swap_horiz_rounded,
+                size: 18,
+                color: theme.colorScheme.primary,
+              ),
             ),
           ],
         ),
