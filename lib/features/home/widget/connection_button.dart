@@ -226,16 +226,16 @@ class _ConnectionButton extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  blurRadius: 20,
-                  spreadRadius: 2,
+                  blurRadius: 24,
+                  spreadRadius: 3,
                   color: isConnected
-                      ? const Color(0xFF22C55E).withValues(alpha: 0.25)
-                      : const Color(0xFFFF7A3C).withValues(alpha: 0.25),
+                      ? const Color(0xFF22C55E).withValues(alpha: 0.28)
+                      : const Color(0xFFFF7A3C).withValues(alpha: 0.28),
                 ),
               ],
             ),
-            width: 110,
-            height: 110,
+            width: 125,
+            height: 125,
             child: Material(
               key: const ValueKey("home_connection_button"),
               shape: const CircleBorder(),
@@ -244,12 +244,12 @@ class _ConnectionButton extends StatelessWidget {
                 focusColor: Colors.grey,
                 onTap: onTap,
                 child: Padding(
-                  padding: const EdgeInsets.all(22),
+                  padding: const EdgeInsets.all(24),
                   child: isConnected
                       ? const Icon(
                           Icons.check_circle_outline_rounded,
                           color: Color(0xFF22C55E),
-                          size: 56,
+                          size: 64,
                         )
                       : Assets.images.sunIcon.svg(
                           colorFilter: const ColorFilter.mode(Color(0xFFFF7A3C), BlendMode.srcIn),
@@ -259,7 +259,7 @@ class _ConnectionButton extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
 
         // Status Title & Subtitle
         if (isConnected) ...[
@@ -270,6 +270,7 @@ class _ConnectionButton extends StatelessWidget {
                   text: "روزنه ",
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
+                    fontSize: 20,
                     color: theme.colorScheme.onSurface,
                   ),
                 ),
@@ -277,17 +278,19 @@ class _ConnectionButton extends StatelessWidget {
                   text: "متصل است",
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
+                    fontSize: 20,
                     color: const Color(0xFF22C55E),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 3),
           Text(
             "اتصال شما امن و پایدار است",
             style: theme.textTheme.labelMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+              fontSize: 13,
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
             ),
           ),
         ] else ...[
@@ -295,30 +298,32 @@ class _ConnectionButton extends StatelessWidget {
             "روزنه متصل نیست",
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
+              fontSize: 20,
               color: theme.colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 3),
           Text(
             "برای اتصال ضربه بزنید",
             style: theme.textTheme.labelMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+              fontSize: 13,
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
             ),
           ),
         ],
-        const SizedBox(height: 12),
+        const SizedBox(height: 14),
 
-        // Primary Action Button (Solid Orange Pill Button)
+        // Primary Action Button (Solid Orange Pill Button - Prominent CTA)
         ElevatedButton(
           onPressed: onTap,
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFF7A3C),
+            backgroundColor: isConnected ? const Color(0xFFDC2626) : const Color(0xFFFF7A3C),
             foregroundColor: Colors.white,
-            minimumSize: const Size(180, 42),
-            elevation: 3,
-            shadowColor: const Color(0xFFFF7A3C).withValues(alpha: 0.35),
+            minimumSize: const Size(250, 50),
+            elevation: 4,
+            shadowColor: const Color(0xFFFF7A3C).withValues(alpha: 0.4),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(22),
+              borderRadius: BorderRadius.circular(25),
             ),
           ),
           child: Text(
@@ -326,6 +331,7 @@ class _ConnectionButton extends StatelessWidget {
             style: theme.textTheme.titleMedium?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
+              fontSize: 18,
             ),
           ),
         ),

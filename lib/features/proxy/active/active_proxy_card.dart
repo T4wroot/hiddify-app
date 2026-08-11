@@ -47,38 +47,46 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
               ),
             ),
             InkWell(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(18),
               onTap: () => context.goNamed('proxies'),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
                 decoration: BoxDecoration(
                   color: isDark ? theme.colorScheme.surfaceContainerHighest : Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(18),
                   border: Border.all(
                     color: const Color(0xFFFED7AA),
-                    width: 1.2,
+                    width: 1.5,
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.03),
+                      blurRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
                     IPCountryFlag(
                       countryCode: countryCode,
                       organization: activeProxy?.ipinfo.org ?? "",
-                      size: 24,
+                      size: 32,
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 14),
                     Expanded(
                       child: Text(
                         countryName,
-                        style: theme.textTheme.titleSmall?.copyWith(
+                        style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
                     ),
                     Icon(
                       Icons.keyboard_arrow_down_rounded,
                       color: theme.colorScheme.onSurfaceVariant,
-                      size: 22,
+                      size: 26,
                     ),
                   ],
                 ),
