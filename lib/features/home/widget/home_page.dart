@@ -88,22 +88,17 @@ class HomePage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ConnectionButton(),
-                        LiveSpeedGauge(),
-                      ],
-                    ),
-                  ),
-                  Gap(16),
-                  ActiveProxyFooter(),
-                ],
+              child: const SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ConnectionButton(),
+                    LiveSpeedGauge(),
+                    Gap(12),
+                    ActiveProxyFooter(),
+                  ],
+                ),
               ),
             ),
           ),
