@@ -76,6 +76,54 @@ class MyAdaptiveLayout extends HookConsumerWidget {
                           unselectedIconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurfaceVariant),
                           unselectedLabelTextStyle: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                           extended: Breakpoint(context).isDesktop(),
+                          minExtendedWidth: 210,
+                          leading: Breakpoint(context).isDesktop()
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 24, bottom: 20, left: 16, right: 16),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          "4.1.2 dev",
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w600,
+                                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            "روزنه",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Theme.of(context).colorScheme.onSurface,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Container(
+                                            padding: const EdgeInsets.all(4),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFFF7A3C),
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: const Icon(Icons.wb_sunny_rounded, color: Colors.white, size: 20),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : null,
                           onDestinationSelected: (index) => _onTap(context, ref, index, isMobileBreakpoint, showProfilesAction),
                           destinations: _navRailDests(_actions(t, showProfilesAction, isMobileBreakpoint)),
                           selectedIndex: _getSelectedIndex(isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex),
