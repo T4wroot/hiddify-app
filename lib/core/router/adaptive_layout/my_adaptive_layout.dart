@@ -68,110 +68,133 @@ class MyAdaptiveLayout extends HookConsumerWidget {
                       node: navScopeNode,
                       child: Directionality(
                         textDirection: TextDirection.rtl,
-                        child: NavigationRail(
-                          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                          indicatorColor: const Color(0xFFFF7A3C).withValues(alpha: 0.15),
-                          selectedIconTheme: const IconThemeData(color: Color(0xFFFF7A3C)),
-                          selectedLabelTextStyle: const TextStyle(color: Color(0xFFFF7A3C), fontWeight: FontWeight.bold),
-                          unselectedIconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurfaceVariant),
-                          unselectedLabelTextStyle: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
-                          extended: Breakpoint(context).isDesktop(),
-                          minExtendedWidth: 210,
-                          leading: Breakpoint(context).isDesktop()
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 24, bottom: 20, left: 16, right: 16),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        child: Text(
-                                          "4.1.2 dev",
-                                          style: TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600,
-                                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                          ),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            "روزنه",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Theme.of(context).colorScheme.onSurface,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Container(
-                                            padding: const EdgeInsets.all(4),
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFFFF7A3C),
-                                              borderRadius: BorderRadius.circular(8),
-                                            ),
-                                            child: const Icon(Icons.wb_sunny_rounded, color: Colors.white, size: 20),
+                        child: Container(
+                          width: 250,
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                          child: Column(
+                            children: [
+                              // Header: Logo on top-right (RTL)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 24, top: 12, right: 4),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFF7A3C),
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: const Color(0xFFFF7A3C).withValues(alpha: 0.3),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 3),
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                )
-                              : null,
-                          onDestinationSelected: (index) => _onTap(context, ref, index, isMobileBreakpoint, showProfilesAction),
-                          destinations: _navRailDests(_actions(t, showProfilesAction, isMobileBreakpoint)),
-                          selectedIndex: _getSelectedIndex(isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex),
-                          trailing: Breakpoint(context).isDesktop()
-                              ? Expanded(
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              const Icon(Icons.wb_sunny_rounded, color: Color(0xFFFF7A3C), size: 24),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                "روزنه",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Theme.of(context).colorScheme.onSurface,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 6),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                                              borderRadius: BorderRadius.circular(12),
-                                            ),
-                                            child: Text(
-                                              "v 4.1.2 dev",
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      child: const Icon(Icons.wb_sunny_rounded, color: Colors.white, size: 22),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      "روزنه",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w900,
+                                        color: Theme.of(context).colorScheme.onSurface,
                                       ),
                                     ),
-                                  ),
-                                )
-                              : null,
+                                  ],
+                                ),
+                              ),
+                              // Menu Items List
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: _actions(t, showProfilesAction, isMobileBreakpoint).length,
+                                  itemBuilder: (context, index) {
+                                    final action = _actions(t, showProfilesAction, isMobileBreakpoint)[index];
+                                    final selectedIndex = _getSelectedIndex(isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex);
+                                    final isSelected = index == selectedIndex;
+                                    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+                                    return Container(
+                                      margin: const EdgeInsets.only(bottom: 12),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () => _onTap(context, ref, index, isMobileBreakpoint, showProfilesAction),
+                                          borderRadius: BorderRadius.circular(16),
+                                          child: AnimatedContainer(
+                                            duration: const Duration(milliseconds: 200),
+                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                            decoration: BoxDecoration(
+                                              color: isSelected
+                                                  ? (isDark ? const Color(0xFF3D271D) : const Color(0xFFFFF0E6))
+                                                  : (isDark
+                                                      ? Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5)
+                                                      : Colors.white),
+                                              borderRadius: BorderRadius.circular(16),
+                                              border: Border.all(
+                                                color: isSelected
+                                                    ? const Color(0xFFFFC2A6)
+                                                    : (isDark
+                                                        ? Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3)
+                                                        : const Color(0xFFF0E5DE)),
+                                                width: 1.2,
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: isSelected
+                                                      ? const Color(0xFFFF7A3C).withValues(alpha: 0.15)
+                                                      : Colors.black.withValues(alpha: 0.03),
+                                                  blurRadius: isSelected ? 12 : 6,
+                                                  offset: const Offset(0, 3),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    action.title,
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                                                      color: isSelected
+                                                          ? const Color(0xFFFF7A3C)
+                                                          : Theme.of(context).colorScheme.onSurface,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.all(8),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: isSelected
+                                                        ? Colors.white
+                                                        : (isDark
+                                                            ? Theme.of(context).colorScheme.surfaceContainerHighest
+                                                            : const Color(0xFFF3F4F6)),
+                                                  ),
+                                                  child: Icon(
+                                                    action.icon,
+                                                    size: 20,
+                                                    color: isSelected
+                                                        ? const Color(0xFFFF7A3C)
+                                                        : Theme.of(context).colorScheme.onSurfaceVariant,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -258,6 +281,4 @@ class MyAdaptiveLayout extends HookConsumerWidget {
 
   List<NavigationDestination> _navDests(List<ShellRouteAction> actions) =>
       actions.map((e) => NavigationDestination(icon: Icon(e.icon), label: e.title)).toList();
-  List<NavigationRailDestination> _navRailDests(List<ShellRouteAction> actions) =>
-      actions.map((e) => NavigationRailDestination(icon: Icon(e.icon), label: Text(e.title))).toList();
 }

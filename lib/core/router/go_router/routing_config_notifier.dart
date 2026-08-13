@@ -46,13 +46,22 @@ final loadingConfig = RoutingConfig(
   routes: <RouteBase>[GoRoute(path: '/home', builder: (context, state) => const Material())],
 );
 
-String getNameOfBranch(bool isMobileBreakpoint, bool showProfilesAction, int index) => isMobileBreakpoint
-    ? ['home', 'settings'][index]
-    : ['home', 'settings', 'about'][index];
+String getNameOfBranch(bool isMobileBreakpoint, bool showProfilesAction, int index) {
+  final branches = isMobileBreakpoint
+      ? ['home', 'settings']
+      : ['home', if (showProfilesAction) 'profiles', 'settings', 'logs', 'about'];
+  if (index >= 0 && index < branches.length) {
+    return branches[index];
+  }
+  return 'home';
+}
 
-int getIndexOfBranch(bool isMobileBreakpoint, bool showProfilesAction, String name) => isMobileBreakpoint
-    ? ['home', 'settings'].indexOf(name)
-    : ['home', 'settings', 'about'].indexOf(name);
+int getIndexOfBranch(bool isMobileBreakpoint, bool showProfilesAction, String name) {
+  final branches = isMobileBreakpoint
+      ? ['home', 'settings']
+      : ['home', if (showProfilesAction) 'profiles', 'settings', 'logs', 'about'];
+  return branches.indexOf(name);
+}
 
 @Riverpod(keepAlive: true)
 class RoutingConfigNotifier extends _$RoutingConfigNotifier {

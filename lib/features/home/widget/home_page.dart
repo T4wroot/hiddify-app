@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:roozaneh/core/app_info/app_info_provider.dart';
 import 'package:roozaneh/core/localization/translations.dart';
-import 'package:roozaneh/core/router/bottom_sheets/bottom_sheets_notifier.dart';
 import 'package:roozaneh/features/home/widget/connection_button.dart';
 import 'package:roozaneh/features/proxy/active/active_proxy_card.dart';
+import 'package:roozaneh/core/router/go_router/helper/active_breakpoint_notifier.dart';
 import 'package:roozaneh/gen/assets.gen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,39 +18,31 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final t = ref.watch(translationsProvider).requireValue;
+    final isMobile = ref.watch(isMobileBreakpointProvider) ?? true;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-        title: Row(
-          children: [
-            Assets.images.logo.svg(height: 24),
-            const Gap(8),
-            Text.rich(
-              TextSpan(
+      appBar: isMobile
+          ? AppBar(
+              backgroundColor: theme.scaffoldBackgroundColor,
+              surfaceTintColor: Colors.transparent,
+              elevation: 0,
+              title: Row(
                 children: [
-                  TextSpan(text: t.common.appTitle),
-                  const TextSpan(text: " "),
-                  const WidgetSpan(child: AppVersionLabel(), alignment: PlaceholderAlignment.middle),
+                  Assets.images.logo.svg(height: 24),
+                  const Gap(8),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(text: t.common.appTitle),
+                        const TextSpan(text: " "),
+                        const WidgetSpan(child: AppVersionLabel(), alignment: PlaceholderAlignment.middle),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
-        actions: [
-          Semantics(
-            key: const ValueKey("profile_add_button"),
-            label: t.pages.profiles.add,
-            child: IconButton(
-              icon: Icon(Icons.add_rounded, color: theme.colorScheme.primary),
-              onPressed: () => ref.read(bottomSheetsNotifierProvider.notifier).showAddProfile(),
-            ),
-          ),
-          const Gap(8),
-        ],
-      ),
+            )
+          : null,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
