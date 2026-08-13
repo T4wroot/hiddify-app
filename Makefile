@@ -257,7 +257,7 @@ linux-flutter-sync:
 
 windows-install-deps:
 	dart pub global activate fastforge
-# 	choco install innosetup -y
+	choco install innosetup -y
 	
 gen_translations: #generating missing translations using google translate
 	cd .github && bash sync_translate.sh
