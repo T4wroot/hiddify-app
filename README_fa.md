@@ -15,9 +15,9 @@
 
 </div>
 
-## اپ هیدیفای چیست؟
+## اپلیکیشن روزنه چیست؟
 
-یک کلاینت خودکار مالتی‌پلتفرم مبتنی بر [سینگ‌باکس](https://github.com/SagerNet/sing-box) که به عنوان یک ابزار عمومی برای پروکسی عمل می‌کند. این برنامه طیف گسترده‌ای از قابلیت‌ها را ارائه می‌دهد مثل انتخاب خودکار نود، مود تونل، پروفایل‌های ریموت و غیره. این برنامه رایگان، بدون آگهی و منبع باز است. با پشتیبانی از طیف وسیعی از پروتکل‌ها، این اپلیکیشن یک ابزار امن و مطمئن برای دسترسی به اینترنت رایگان فراهم می‌کند.
+یک کلاینت خودکار چندپلتفرمه مبتنی بر [سینگ‌باکس](https://github.com/SagerNet/sing-box) که به عنوان یک ابزار عمومی برای پروکسی عمل می‌کند. روزنه طیف گسترده‌ای از قابلیت‌ها را ارائه می‌دهد مثل انتخاب خودکار نود، مود تونل، پروفایل‌های ریموت و غیره. این برنامه رایگان، بدون آگهی و متن‌باز است. با پشتیبانی از طیف وسیعی از پروتکل‌ها، این اپلیکیشن یک ابزار امن و مطمئن برای دسترسی به اینترنت آزاد و پایدار فراهم می‌کند.
 
 
 
@@ -47,26 +47,15 @@ Vless, Vmess, Reality, TUIC, Hysteria, Wireguard, SSH, etc.
 
 🔎 نمایش اطلاعات پروفایل کاربر شامل روز و حجم باقیمانده
 
-🛡 اپن سورس، کاملا امن و کامیونیتی محور
+🛡 متن‌باز، کاملا امن و کامیونیتی محور
 
 🌙 دارای تم دارک و لایت
 
 ⚙ سازگار با تمام پنل‌ها
 
-⭐ کانفیگ متناسب برای ایران، چین، روسیه و‌ سایر کشورها
-
-📱 انتشار در استورهای معتبر
+⭐ کانفیگ متناسب برای ایران و سایر کشورها
 
 
-
-## 🛍️ دریافت از استورها
-<div dir=rtl align=right>
-    
-<a href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532?platform=iphone"><img height=50px src="https://github.com/user-attachments/assets/a7c62126-07ce-4f18-8197-bbb672f6d8be"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="https://play.google.com/store/apps/details?id=app.hiddify.com"><img height=50px src="https://github.com/hiddify/hiddify-next/blob/main/docs/google-play-badge.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="https://apps.microsoft.com/detail/Hiddify/9pdfnl3qv2s5?mode=mini" target="_blank"><img height=50px src="https://github.com/hiddify/hiddify-next/assets/125398461/620750bb-4459-41b5-9f86-ba82119345b8" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-</div>
 
 ## 📥 دانلود مستقیم
 <div dir=rtl align=right>
@@ -80,41 +69,32 @@ Vless, Vmess, Reality, TUIC, Hysteria, Wireguard, SSH, etc.
     </thead>
     <tbody align=right>
         <tr>
-        <td>iOS</td>
-            <td>
-                <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-iOS.ipa"><img src="https://img.shields.io/badge/IPA-Universal-c0c0c0.svg?logo=ios"></a>
-            </td>
-        </tr>
-        <tr>
         <td>اندروید</td><td>
-             <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
-            <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Android-arm64.apk"><img src="https://img.shields.io/badge/APK-ARMv8-168039.svg?logo=android"></a><br>
-            <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Android-arm7.apk"><img src="https://img.shields.io/badge/APK-ARMv7-45bf55.svg?logo=android"></a><br>
-            <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Android-x86_64.apk"><img src="https://img.shields.io/badge/APK-x64-96ed89.svg?logo=android"></a>
+             <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
+            <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-arm64.apk"><img src="https://img.shields.io/badge/APK-ARMv8-168039.svg?logo=android"></a><br>
+            <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-arm7.apk"><img src="https://img.shields.io/badge/APK-ARMv7-45bf55.svg?logo=android"></a><br>
+            <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-x86_64.apk"><img src="https://img.shields.io/badge/APK-x64-96ed89.svg?logo=android"></a>
         </td>
         </tr>
         <tr>
             <td>ویندوز</td>
             <td>
-                <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Windows-Setup-x64.Msix"><img src="https://img.shields.io/badge/OfficialSetup-x64-0078d7.svg?logo=windows"></a><br>
-                <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Windows-Setup-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
-                <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Windows-Portable-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
+                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Windows-Setup-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
+                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Windows-Portable-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
         </td>
         </tr>
         <tr>
             <td>مک</td>
             <td>
-                <a href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532"><img src="https://img.shields.io/badge/IPA-ARM-D33A54.svg?logo=apple"></a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-MacOS.dmg"><img src="https://img.shields.io/badge/DMG-Universal-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-MacOS-Installer.pkg"><img src="https://img.shields.io/badge/PKG-Universal-bc544b.svg?logo=apple" /></a>
+                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-MacOS.dmg"><img src="https://img.shields.io/badge/DMG-Universal-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-MacOS-Installer.pkg"><img src="https://img.shields.io/badge/PKG-Universal-bc544b.svg?logo=apple" /></a>
             </td>
        </tr>
         <tr>
             <td>لینوکس</td>
             <td>
-                <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Linux-x64.AppImage"><img src="https://img.shields.io/badge/AppImage-x64-f84e29.svg?logo=linux"> </a><br>
-                <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Debian-x64.deb"><img src="https://img.shields.io/badge/DebPackage-x64-FF9966.svg?logo=debian"> </a><br>
-                <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-rpm-x64.rpm"><img src="https://img.shields.io/badge/RpmPackage-x64-F1B42F.svg?logo=redhat"> </a>
+                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Linux-x64-AppImage.tar.gz"><img src="https://img.shields.io/badge/AppImage-x64-f84e29.svg?logo=linux"> </a><br>
+                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Debian-x64.deb"><img src="https://img.shields.io/badge/DebPackage-x64-FF9966.svg?logo=debian"> </a>
             </td>
         </tr>
     </tbody>
