@@ -1,176 +1,59 @@
-<div align="center" markdown="1" dir="ltr">
-
-[**🇺🇸 English**](README.md) / [**🇨🇳 简体中文**](README_cn.md) / [**🇷🇺 Русский**](README_ru.md) / [**🇯🇵 日本語**](README_ja.md) / [**🇧🇷 Portugês-BR**](README_br.md)
-
-</div>
-<br>
-
-<p align="center"><img src="https://github.com/hiddify/hiddify.com/blob/main/docs/assets/hiddify-app-logo.svg" width=56% /></p>
-<br>
-
-<div align="center">
-    
-[![GP-Intalls](https://img.shields.io/endpoint?color=green&logo=google-play&logoColor=green&url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Dapp.hiddify.com%26l%3DGoogle%2520Play%26m%3D%24shortinstalls&style=flat-square)](https://play.google.com/store/apps/details?id=app.hiddify.com) [![Downloads](https://img.shields.io/github/downloads/hiddify/hiddify-next/total?style=flat-square&logo=github)](https://github.com/hiddify/hiddify-app/releases/)[![Last Version](https://img.shields.io/github/release/hiddify/hiddify-next/all.svg?style=flat-square)](https://github.com/hiddify/hiddify-app/releases/)[![Last Release Date](https://img.shields.io/github/release-date/hiddify/hiddify-next.svg?style=flat-square)](https://github.com/hiddify/hiddify-app/releases/)[![commits](https://img.shields.io/github/commit-activity/m/hiddify/hiddify-next?style=flat-square)](https://github.com/hiddify/hiddify-app/)
-[![Youtube](https://img.shields.io/youtube/channel/views/UCxrmeMvVryNfB4XL35lXQNg?label=Youtube&style=flat-square&logo=youtube)](https://www.youtube.com/@hiddify)[![Telegram Channel](https://img.shields.io/endpoint?label=Channel&style=flat-square&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fhiddify&color=blue)](https://telegram.dog/hiddify)[![Telegram Group](https://img.shields.io/endpoint?color=neon&label=Support%20Group&style=flat-square&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fhiddify_board)](https://telegram.dog/hiddify_board/5)
-
-</div>
-
-## اپلیکیشن روزنه چیست؟
-
-یک کلاینت خودکار چندپلتفرمه مبتنی بر [سینگ‌باکس](https://github.com/SagerNet/sing-box) که به عنوان یک ابزار عمومی برای پروکسی عمل می‌کند. روزنه طیف گسترده‌ای از قابلیت‌ها را ارائه می‌دهد مثل انتخاب خودکار نود، مود تونل، پروفایل‌های ریموت و غیره. این برنامه رایگان، بدون آگهی و متن‌باز است. با پشتیبانی از طیف وسیعی از پروتکل‌ها، این اپلیکیشن یک ابزار امن و مطمئن برای دسترسی به اینترنت آزاد و پایدار فراهم می‌کند.
-
-
-
-
-<div align=center>
-<img width=90% alt="Farsi Demo" src="https://github.com/hiddify/hiddify-app/assets/125398461/cfdc4b0e-0a26-42f5-90ef-1d8587d2afd2">
-
-</div>
-
-
-
-## 🚀 امکانات اصلی
-
-✈️ پشتیبانی از چند پلتفرم: اندروید، iOS، ویندوز، مک و لینوکس
-
-⭐ استفاده بسیار آسان با رابط کاربری ساده
-
-🔍 انتخاب خودکار بهترین سرور و کانفیگ بر اساس تاخیر
-
-🟡 پشتیبانی از رنج وسیعی از پروتکل‌ها
-Vless, Vmess, Reality, TUIC, Hysteria, Wireguard, SSH, etc.
-
-🟡 پشتیبانی لینک‌های سابسکریپشن‌ مختلف:
-سینگ‌باکس، V2ray، کلش، کلش‌متا
-
-🔄 آپدیت خودکار لینک سابسکریپشن و کانفیگ‌ها
-
-🔎 نمایش اطلاعات پروفایل کاربر شامل روز و حجم باقیمانده
-
-🛡 متن‌باز، کاملا امن و کامیونیتی محور
-
-🌙 دارای تم دارک و لایت
-
-⚙ سازگار با تمام پنل‌ها
-
-⭐ کانفیگ متناسب برای ایران و سایر کشورها
-
-
-
-## 📥 دانلود مستقیم
-<div dir=rtl align=right>
-
-   <table>
-    <thead align=right>
-        <tr>
-            <th>سیستم عامل</th>
-            <th>دانلود</th>
-        </tr>
-    </thead>
-    <tbody align=right>
-        <tr>
-        <td>اندروید</td><td>
-             <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
-            <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-arm64.apk"><img src="https://img.shields.io/badge/APK-ARMv8-168039.svg?logo=android"></a><br>
-            <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-arm7.apk"><img src="https://img.shields.io/badge/APK-ARMv7-45bf55.svg?logo=android"></a><br>
-            <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-x86_64.apk"><img src="https://img.shields.io/badge/APK-x64-96ed89.svg?logo=android"></a>
-        </td>
-        </tr>
-        <tr>
-            <td>ویندوز</td>
-            <td>
-                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Windows-Setup-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
-                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Windows-Portable-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
-        </td>
-        </tr>
-        <tr>
-            <td>مک</td>
-            <td>
-                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-MacOS.dmg"><img src="https://img.shields.io/badge/DMG-Universal-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-MacOS-Installer.pkg"><img src="https://img.shields.io/badge/PKG-Universal-bc544b.svg?logo=apple" /></a>
-            </td>
-       </tr>
-        <tr>
-            <td>لینوکس</td>
-            <td>
-                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Linux-x64-AppImage.tar.gz"><img src="https://img.shields.io/badge/AppImage-x64-f84e29.svg?logo=linux"> </a><br>
-                <a href="https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Debian-x64.deb"><img src="https://img.shields.io/badge/DebPackage-x64-FF9966.svg?logo=debian"> </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-## ⚙️ نصب و آموزش
-**برای مطالعه و مشاهده همه مطالب آموزشی در مورد این برنامه، با کلیک روی تصویر زیر به صفحه ویکی پروژه مراجعه کنید.**
+# 🌅 اپلیکیشن روزنه (Roozaneh)
 
 <div align="center">
 
-[![همه آموزش‌ها در ویکی](https://github.com/hiddify/hiddify-app/assets/125398461/3b9ec2fe-9057-45fc-b19f-a1356e94525f)](https://hiddify.com/fa/app/)
+**ارتباط پایدار، امن و پرسرعت با یک کلیک**
+
+[![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/T4wroot/roozaneh-app/releases/latest)
+[![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/T4wroot/roozaneh-app/releases/latest)
+[![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/T4wroot/roozaneh-app/releases/latest)
+[![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/T4wroot/roozaneh-app/releases/latest)
+
+[**English Version**](README.md) • [**دانلود آخرین نسخه**](https://github.com/T4wroot/roozaneh-app/releases/latest) • [**پشتیبانی**](https://demo.irn.one)
 
 </div>
 
+---
 
+## 📖 درباره روزنه
 
-## 🌎 ترجمه‌ها
+**روزنه** یک کلاینت مدرن، سریع و چندپلتفرمه برای دسترسی امن و پایدار به اینترنت آزاد است. این کلاینت با بهره‌گیری از هسته قدرتمند **Sing-box** و پشتیبانی کامل از جدیدترین پروتکل‌های ارتباطی، تجربه‌ای روان و بدون افت سرعت را برای کاربران به ارمغان می‌آورد. طراحی روزنه با هدف ارائه سرویسی پایدار، رابط کاربری چشم‌نواز و عملکرد بدون دردسر و بدون نیاز به تنظیمات پیچیده انجام شده است.
 
+---
 
-با ویرایش دستی فایل‌های JSON در assets/translations/ یا با استفاده از [![Translate with Inlang](https://img.shields.io/badge/%20-%20-3ECF8E?logo=i18next&logoColor=white)](https://fink.inlang.com/github.com/hiddify/hiddify-app) [ویرایشگر آنلاین Inlang](https://fink.inlang.com/editor/github.com/hiddify/hiddify-app)، زبان‌های موجود را بهبود بدهید و یا زبان‌های جدید اضافه کنید.
+## ⚡ امکانات و ویژگی‌های برجسته
 
-## ✏️ سپاسگزاری‌ها
-مایلیم از دست‌اندرکاران پروژه‌های زیر صمیمانه قدردانی کنیم که پایه قوی و ویژگی‌های نوآورانه آنها موفقیت و عملکرد این پروژه را به میزان قابل توجهی افزایش داده است.
+- 🚀 **اتصال هوشمند و تک‌کلیک:** انتخاب خودکار پایدارترین سرور با کمترین تاخیر (پینگ).
+- 🌐 **پشتیبانی از پروتکل‌های پیشرفته:** VLESS, VMess, Reality, Trojan, TUIC, Hysteria2, WireGuard, SSH و...
+- 🔄 **به‌روزرسانی خودکار اشتراک:** همگام‌سازی لحظه‌ای کانفیگ‌ها، حجم مصرفی و روزهای باقیمانده پلن.
+- 💻 **سازگاری کامل با تمامی سیستم‌عامل‌ها:** اندروید، ویندوز، مک‌او‌اس و لینوکس.
+- 🎨 **رابط کاربری مدرن (Material 3):** همراه با حالت تاریک (Dark Mode) و روشن (Light Mode) متناسب با سلیقه شما.
+- 🛡️ **حفظ امنیت و حریم خصوصی:** بدون تبلیغات مزاحم و با رمزنگاری پیشرفته ترافیک.
+- ⚙️ **مود تونل (TUN) و مسیریابی هوشمند:** هدایت ترافیک کل سیستم یا برنامه‌های منتخب با بالاترین راندمان.
 
-- [سینگ‌باکس](https://github.com/SagerNet/sing-box)
-- [سینگ‌باکس برای اندروید](https://github.com/SagerNet/sing-box-for-android)
-- [کلش](https://github.com/Dreamacro/clash)
-- [کلش‌متا](https://github.com/MetaCubeX/Clash.Meta)
-- [اف‌کلش](https://github.com/Fclash/Fclash)
-- [فونت وزیرمتن صابر راستی‌کردار](https://github.com/rastikerdar/vazirmatn)
-- [سایر](./pubspec.yaml)
+---
 
+## 📥 دانلود مستقیم نرم‌افزار
 
-## 🎯 حمایت از پروژه
+برای دریافت فایل نصب متناسب با دستگاه خود از جدول زیر استفاده کنید:
 
-ساده‌ترین راه حمایت از ما کلیک کردن روی ستاره (⭐) بالای همین صفحه است.
+| سیستم‌عامل | نسخه | نوع بسته | لینک دانلود مستقیم |
+| :--- | :--- | :---: | :--- |
+| **اندروید (Android)** | پردازنده‌های ۶۴ بیتی (پیشنهادی) | `APK` | [دانلود نسخه Arm64](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-arm64.apk) |
+| **اندروید (Android)** | تمام گوشی‌ها (Universal) | `APK` | [دانلود نسخه Universal](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-universal.apk) |
+| **اندروید (Android)** | پردازنده‌های قدیمی (۳۲ بیتی) | `APK` | [دانلود نسخه Arm7](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Android-arm7.apk) |
+| **ویندوز (Windows)** | فایل نصبی ویندوز (Setup 64-bit) | `EXE` | [دانلود نسخه نصبی ویندوز](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Windows-Setup-x64.exe) |
+| **ویندوز (Windows)** | نسخه پرتابل (بدون نیاز به نصب) | `ZIP` | [دانلود نسخه پرتابل ویندوز](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Windows-Portable-x64.zip) |
+| **مک‌او‌اس (macOS)** | بسته نصبی استاندارد (DMG) | `DMG` | [دانلود نسخه DMG مک](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-MacOS.dmg) |
+| **مک‌او‌اس (macOS)** | بسته نصبی پکیج (PKG) | `PKG` | [دانلود نسخه PKG مک](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-MacOS-Installer.pkg) |
+| **لینوکس (Linux)** | بسته بدون نیاز به نصب (AppImage) | `AppImage` | [دانلود نسخه AppImage](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Linux-x64-AppImage.tar.gz) |
+| **لینوکس (Linux)** | توزیع‌های اوبونتو و دبیان | `DEB` | [دانلود بسته DEB](https://github.com/T4wroot/roozaneh-app/releases/latest/download/Roozaneh-Debian-x64.deb) |
 
-<div align=center>
-    
-<a href="https://next.ossinsight.io/widgets/official/analyze-repo-stars-history?repo_id=643504282" target="_blank" style="display: block" align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/analyze-repo-stars-history/thumbnail.png?repo_id=643504282&image_size=auto&color_scheme=dark" width="721" height="auto">
-    <img alt="Star History of hiddify/hiddify-app" src="https://next.ossinsight.io/widgets/official/analyze-repo-stars-history/thumbnail.png?repo_id=643504282&image_size=auto&color_scheme=light" width="721" height="auto">
-  </picture>
-</a>
+---
 
-</div>
+## 📞 پشتیبانی و تماس
 
-ما برای سرویس هایمان به کمک مالی هم نیاز داریم. تمامی فعالیت‌های ما به صورت داوطلبانه انجام می‌شود و حمایت‌های مالی صرف توسعه پروژه می‌شود. اطلاعات و آدرس‌های حمایت‌ از ما را در [این لینک](https://hiddify.com/fa/donation-and-support/) مشاهده فرمایید.
+برای دریافت اشتراک، راهنمایی و پشتیبانی فنی:
 
-## 👩‍🏫 راه‌های همکاری و ارتباط با ما
-
-هیدیفای‌نکست یه پروژه کامیونیتی محور است. اگر به مشارکت در این پروژه علاقه دارید، لطفا راهنمای مشارکت در این پروژه را مطالعه فرمایید. ما به صورت ویژه هر گونه کمکی در این زمینه‌ها را ارج می‌نهیم: **فلاتر، Go، توسعه iOS (سوئیفت)، توسعه اندروید (کاتلین)**.
-
-
-
-<br>
-<div align=center>
-    
-[![Email](https://img.shields.io/badge/Email-contribute@hiddify.com-005FF9?style=flat-square&logo=mail.ru)](mailto:contribute@hiddify.com)
-[![Telegram Channel](https://img.shields.io/endpoint?label=Channel&style=flat-square&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fhiddify&color=blue)](https://telegram.dog/hiddify)
-[![Telegram Group](https://img.shields.io/endpoint?color=neon&label=Support%20Group&style=flat-square&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fhiddify_board)](https://telegram.dog/hiddify_board)
-[![Youtube](https://img.shields.io/youtube/channel/views/UCxrmeMvVryNfB4XL35lXQNg?label=Youtube&style=flat-square&logo=youtube)](https://www.youtube.com/@hiddify)
-[![Twitter](https://img.shields.io/twitter/follow/hiddify_com?color=%231DA1F2&logo=twitter&logoColor=1DA1F2&style=flat-square)](https://twitter.com/intent/follow?screen_name=hiddify_com)
-
- </div>
- 
-<p align=center>
- از همه کسانی که در این پروژه مشارکت می‌کنند سپاسگزاریم. بعضی از آن‌ها اینجا هستند و خیلی های دیگه خارج از گیتهاب. همگی خیلی برای ما ارزشمندند. ♥
- </p>
- 
-<p align=center> 
-<a href="https://github.com/hiddify/hiddify-app/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=hiddify/hiddify-next" />
-</a>
-</p>
-<p align=center>
- ساخته شده با <a rel="" target="_blank" href="https://contrib.rocks">Contrib.Rocks</a> 
-</p>
+- 🌐 **وب‌سایت و درگاه پشتیبانی:** [demo.irn.one](https://demo.irn.one)
+- 📢 **کانال اطلاع‌رسانی و اخبار:** [demo.irn.one](https://demo.irn.one)
