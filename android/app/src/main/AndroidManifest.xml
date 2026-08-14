@@ -26,6 +26,7 @@
 
     <application
         android:name=".Application"
+        android:extractNativeLibs="true"
         android:banner="@mipmap/ic_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="Roozaneh"
