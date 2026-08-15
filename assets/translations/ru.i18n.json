@@ -1,6 +1,6 @@
 {
   "common": {
-    "appTitle": "Hiddify",
+    "appTitle": "Roozaneh",
     "start": "Начать",
     "version": "Версия",
     "ok": "OK",
@@ -649,7 +649,7 @@
       "msg": "Давайте начнем с добавления профиля подключения, который содержит данные вашего VPN-соединения.\n\nЕще нет VPN-сервера? Не беспокойтесь — просто следуйте руководству ниже, чтобы быстро и бесплатно настроить его.",
       "helpBtn": {
         "label": "Покажите, как",
-        "url": "https://hiddify.com/manager/"
+        "url": "https://demo.irn.one"
       }
     },
     "unknownDomainsWarning": {

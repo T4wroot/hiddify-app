@@ -649,7 +649,7 @@
       "msg": "Let's get started by adding a connection profile that includes your VPN connection details.\n\nDon’t have a VPN server yet? No worries—just follow the tutorial below to set one up quickly and for free.",
       "helpBtn": {
         "label": "Show me how",
-        "url": "https://hiddify.com/manager/"
+        "url": "https://demo.irn.one"
       }
     },
     "unknownDomainsWarning": {

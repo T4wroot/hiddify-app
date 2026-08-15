@@ -1,6 +1,6 @@
 {
   "common": {
-    "appTitle": "Hiddify",
+    "appTitle": "Roozaneh",
     "start": "Mulai",
     "version": "Versi",
     "ok": "Oke",
@@ -645,7 +645,7 @@
       "msg": "Mari kita mulai dengan menambahkan profil koneksi yang berisi detail koneksi VPN Anda.\n\nBelum punya server VPN? Jangan khawatir, ikuti tutorial di bawah ini untuk mengaturnya dengan cepat dan gratis.",
       "helpBtn": {
         "label": "Tunjukkan caranya",
-        "url": "https://hiddify.com/manager/"
+        "url": "https://demo.irn.one"
       }
     },
     "unknownDomainsWarning": {
