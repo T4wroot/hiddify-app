@@ -59,38 +59,18 @@ class HomePage extends HookConsumerWidget {
         ),
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 520),
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-              decoration: BoxDecoration(
-                color: theme.brightness == Brightness.dark
-                    ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.85)
-                    : Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(
-                  color: const Color(0xFFFED7AA),
-                  width: 1.2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFFFF7A3C).withValues(alpha: 0.06),
-                    blurRadius: 24,
-                    offset: const Offset(0, 4),
-                  ),
+            constraints: const BoxConstraints(maxWidth: 480),
+            child: const SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ConnectionButton(),
+                  LiveSpeedGauge(),
+                  Gap(12),
+                  ActiveProxyFooter(),
                 ],
-              ),
-              child: const SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ConnectionButton(),
-                    LiveSpeedGauge(),
-                    Gap(12),
-                    ActiveProxyFooter(),
-                  ],
-                ),
               ),
             ),
           ),
