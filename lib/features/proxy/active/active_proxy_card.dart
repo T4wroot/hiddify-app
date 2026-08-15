@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/model/constants.dart';
 import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
 import 'package:roozaneh/features/connection/model/connection_status.dart';
 import 'package:roozaneh/features/connection/notifier/connection_notifier.dart';
@@ -24,9 +25,12 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
     final isDark = theme.brightness == Brightness.dark;
     final isConnected = connectionState == const Connected() && activeProxy != null;
 
-    final countryCode = activeProxy?.ipinfo.countryCode ?? "DE";
-    final countryName = countryCode == "DE" ? "آلمان" : countryCode;
-    final delayMs = activeProxy?.urlTestDelay ?? 42;
+    final countryCode = activeProxy?.ipinfo.countryCode ?? "";
+    final countryName = (activeProxy != null && activeProxy.tagDisplay.isNotEmpty)
+        ? activeProxy.tagDisplay
+        : "انتخاب لوکیشن و سرور";
+    final hasPing = activeProxy != null && activeProxy.urlTestDelay > 0 && ConnectionConst.isValidDelay(activeProxy.urlTestDelay);
+    final delayText = hasPing ? "${activeProxy.urlTestDelay} ms" : "---";
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -183,7 +187,7 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    "$delayMs ms",
+                    delayText,
                     style: theme.textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:roozaneh/core/model/constants.dart';
 import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
 import 'package:roozaneh/features/proxy/active/ip_widget.dart';
-import 'package:roozaneh/gen/fonts.gen.dart';
 import 'package:roozaneh/hiddifycore/generated/v2/hcore/hcore.pb.dart';
 import 'package:roozaneh/utils/custom_loggers.dart';
-import 'package:roozaneh/utils/platform_utils.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProxyTile extends HookConsumerWidget with PresLogger {
   const ProxyTile(this.proxy, {super.key, required this.selected, required this.onTap});
@@ -20,26 +18,7 @@ class ProxyTile extends HookConsumerWidget with PresLogger {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    // Clean display name
-    String displayName = proxy.tagDisplay;
-    if (displayName.contains("balance") || displayName.contains("round-robin")) {
-      displayName = "بالانسر هوشمند (بهترین سرور خودکار)";
-    } else if (displayName.contains("lowest")) {
-      displayName = "کم‌ترین پینگ خودکار";
-    } else {
-      final country = (proxy.ipinfo.countryCode == "DE" || proxy.ipinfo.countryCode.isEmpty) ? "آلمان" : proxy.ipinfo.countryCode;
-      if (displayName.contains("Reality") || displayName.contains("REALITY")) {
-        displayName = "سرور Reality $country";
-      } else if (displayName.contains("Shadow")) {
-        displayName = "سرور Shadowsocks $country";
-      } else if (displayName.contains("CDN")) {
-        displayName = "سرور CDN $country";
-      } else {
-        final cleanTag = displayName.replaceAll(RegExp(r'^[A-Z]{2}\s*[-=]*\s*'), '').replaceAll(RegExp(r'[\(\[\{].*?[\)\]\}]'), '').trim();
-        displayName = cleanTag.isNotEmpty ? "سرور $country ($cleanTag)" : "سرور پرسرعت $country";
-      }
-    }
-
+    final displayName = proxy.tagDisplay.isNotEmpty ? proxy.tagDisplay : proxy.tag;
     final hasValidPing = ConnectionConst.isValidDelay(proxy.urlTestDelay);
 
     return Container(
