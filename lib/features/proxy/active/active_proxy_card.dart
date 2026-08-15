@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:roozaneh/core/localization/translations.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:roozaneh/core/model/constants.dart';
-import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
+import 'package:roozaneh/core/utils/country_helper.dart';
 import 'package:roozaneh/features/connection/model/connection_status.dart';
 import 'package:roozaneh/features/connection/notifier/connection_notifier.dart';
 import 'package:roozaneh/features/proxy/active/active_proxy_notifier.dart';
 import 'package:roozaneh/features/proxy/active/ip_widget.dart';
 import 'package:roozaneh/hiddifycore/generated/v2/hcore/hcore.pb.dart';
 import 'package:roozaneh/utils/custom_loggers.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
   const ActiveProxyFooter({super.key});
@@ -25,10 +24,19 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
     final isDark = theme.brightness == Brightness.dark;
     final isConnected = connectionState == const Connected() && activeProxy != null;
 
-    final countryCode = activeProxy?.ipinfo.countryCode ?? "";
-    final countryName = (activeProxy != null && activeProxy.tagDisplay.isNotEmpty)
-        ? activeProxy.tagDisplay
-        : "انتخاب لوکیشن و سرور";
+    final countryCode = detectCountryCode(activeProxy?.tagDisplay ?? "", activeProxy?.ipinfo.countryCode);
+    final countryInfo = kCountryNames[countryCode];
+    final String countryName;
+    if (countryInfo != null) {
+      countryName = countryInfo.$1;
+    } else if (activeProxy != null && (activeProxy.tagDisplay.toLowerCase().contains("lowest") || activeProxy.tagDisplay.toLowerCase().contains("balance") || activeProxy.tagDisplay == "select")) {
+      countryName = "اتصال هوشمند (بهترین سرور)";
+    } else if (activeProxy != null && activeProxy.tagDisplay.isNotEmpty) {
+      countryName = activeProxy.tagDisplay;
+    } else {
+      countryName = "اتصال هوشمند (سریع‌ترین سرور)";
+    }
+
     final hasPing = activeProxy != null && activeProxy.urlTestDelay > 0 && ConnectionConst.isValidDelay(activeProxy.urlTestDelay);
     final delayText = hasPing ? "${activeProxy.urlTestDelay} ms" : "---";
 
