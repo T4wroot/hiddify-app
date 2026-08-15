@@ -101,7 +101,7 @@
   "intro": {
     "banner": "Все, что вам нужно для интернета без ограничений",
     "termsAndPolicyCaution(rich)": "Продолжая, вы соглашаетесь с ${tap(@:pages.about.termsAndConditions)}",
-    "info(rich)": "Сделано с ❤️ Hiddify - ${tap_source(Открытый исходный код)} (${tap_license(Лицензия)})"
+    "info(rich)": "Сделано с ❤️ Roozaneh - ${tap_source(Открытый исходный код)} (${tap_license(Лицензия)})"
   },
   "pages": {
     "home": {
