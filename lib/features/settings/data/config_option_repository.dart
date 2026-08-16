@@ -489,7 +489,7 @@ abstract class ConfigOptions {
       enableRedirectPort: ref.watch(enableRedirectPort),
       tunImplementation: ref.watch(tunImplementation),
       mtu: ref.watch(mtu),
-      strictRoute: ref.watch(strictRoute),
+      strictRoute: !PlatformUtils.isDesktop && ref.watch(strictRoute),
       connectionTestUrl: ref.watch(connectionTestUrl),
       urlTestInterval: ref.watch(urlTestInterval),
       enableClashApi: ref.watch(enableClashApi),
