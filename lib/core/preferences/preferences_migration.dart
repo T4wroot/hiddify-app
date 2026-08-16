@@ -45,13 +45,13 @@ class PreferencesVersion1Migration extends PreferencesMigrationStep with InfraLo
   Future<void> migrate() async {
     if (sharedPreferences.getString("service-mode") case final String serviceMode) {
       final newMode = switch (serviceMode) {
-        "proxy" || "system-proxy" || "vpn" => serviceMode,
-        "systemProxy" => "system-proxy",
-        "tun" => "vpn",
-        _ => PlatformUtils.isDesktop ? "system-proxy" : "vpn",
+        "proxy" => "proxy",
+        _ => "vpn",
       };
       loggy.debug("changing service-mode from [$serviceMode] to [$newMode]");
       await sharedPreferences.setString("service-mode", newMode);
+    } else {
+      await sharedPreferences.setString("service-mode", "vpn");
     }
 
     if (sharedPreferences.getString("ipv6-mode") case final String ipv6Mode) {

@@ -20,7 +20,7 @@ abstract class ConfigOptions {
   static final serviceMode = PreferencesNotifier.create<ServiceMode, String>(
     "service-mode",
     ServiceMode.defaultMode,
-    mapFrom: (value) => ServiceMode.choices.firstWhere((e) => e.key == value),
+    mapFrom: (value) => ServiceMode.choices.firstWhere((e) => e.key == value, orElse: () => ServiceMode.tun),
     mapTo: (value) => value.key,
   );
 
