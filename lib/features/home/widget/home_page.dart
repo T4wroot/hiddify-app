@@ -58,17 +58,20 @@ class HomePage extends HookConsumerWidget {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 480),
-            child: const SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ConnectionButton(),
-                  LiveSpeedGauge(),
-                  Gap(12),
-                  ActiveProxyFooter(),
-                ],
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: const SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ConnectionButton(),
+                    LiveSpeedGauge(),
+                    Gap(12),
+                    ActiveProxyFooter(),
+                  ],
+                ),
               ),
             ),
           ),
