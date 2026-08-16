@@ -106,71 +106,6 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
             ),
           ],
         ),
-        const SizedBox(height: 12),
-
-        // 2. Smart Route Card
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          decoration: BoxDecoration(
-            color: isDark
-                ? const Color(0xFFFF7A3C).withValues(alpha: 0.12)
-                : const Color(0xFFFFF8F2),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: const Color(0xFFFF7A3C).withValues(alpha: 0.2),
-              width: 1.0,
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFF7A3C).withValues(alpha: 0.15),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.swap_horiz_rounded,
-                  size: 18,
-                  color: Color(0xFFFF7A3C),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "مسیر هوشمند",
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.onSurface,
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        const Icon(
-                          Icons.auto_awesome_rounded,
-                          size: 14,
-                          color: Color(0xFFFF7A3C),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      "بهترین و سریع‌ترین مسیر برای شما",
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
         const SizedBox(height: 10),
 
         // 3. Latency & Stability Bar
@@ -210,7 +145,7 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
               Row(
                 children: [
                   Text(
-                    "پایدار",
+                    isConnected ? "پایدار" : "قطع",
                     style: theme.textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: theme.colorScheme.onSurfaceVariant,
@@ -221,7 +156,7 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
                     width: 8,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: isConnected ? const Color(0xFF22C55E) : const Color(0xFF22C55E),
+                      color: isConnected ? const Color(0xFF22C55E) : theme.colorScheme.outline,
                       shape: BoxShape.circle,
                     ),
                   ),
