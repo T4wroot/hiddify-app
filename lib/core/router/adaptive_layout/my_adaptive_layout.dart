@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:roozaneh/core/localization/locale_extensions.dart';
 import 'package:roozaneh/core/localization/locale_preferences.dart';
 import 'package:roozaneh/core/localization/translations.dart';
-import 'package:roozaneh/core/model/constants.dart';
 import 'package:roozaneh/core/router/adaptive_layout/shell_route_action.dart';
 import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
-import 'package:roozaneh/core/router/go_router/helper/active_breakpoint_notifier.dart';
 import 'package:roozaneh/core/router/go_router/routing_config_notifier.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:roozaneh/gen/assets.gen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyAdaptiveLayout extends HookConsumerWidget {
@@ -20,7 +18,7 @@ class MyAdaptiveLayout extends HookConsumerWidget {
     required this.isMobileBreakpoint,
     required this.showProfilesAction,
   });
-  // managed by go router(Shell Route)
+
   final StatefulNavigationShell navigationShell;
   final bool isMobileBreakpoint;
   final bool showProfilesAction;
@@ -28,164 +26,95 @@ class MyAdaptiveLayout extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = ref.watch(translationsProvider).requireValue;
-    // focus switch management
-    final primaryFocusHash = useState<int?>(null);
-    final navScopeNode = useFocusScopeNode();
-    useEffect(() {
-      bool handler(KeyEvent event) {
-        final arrows = isMobileBreakpoint ? KeyboardConst.verticalArrows : KeyboardConst.horizontalArrows;
-        if (!arrows.contains(event.logicalKey)) return false;
-        if (event is KeyDownEvent) {
-          primaryFocusHash.value = FocusManager.instance.primaryFocus.hashCode;
-        } else {
-          // focus node does not change => true.
-          if (primaryFocusHash.value == FocusManager.instance.primaryFocus.hashCode) {
-            if (branchesScope.values.any((node) => node.hasFocus)) {
-              navScopeNode.requestFocus();
-            } else if (navScopeNode.hasFocus) {
-              branchesScope[getNameOfBranch(isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex)]
-                  ?.requestFocus();
-            }
-          }
-        }
-        return true;
-      }
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
-      HardwareKeyboard.instance.addHandler(handler);
-      return () {
-        HardwareKeyboard.instance.removeHandler(handler);
-      };
-    }, [isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex]);
-    return Material(
+    return FocusScope(
       child: Scaffold(
+        extendBody: isMobileBreakpoint,
         body: isMobileBreakpoint
             ? navigationShell
-            : Directionality(
-                textDirection: TextDirection.rtl,
+            : SelectionArea(
                 child: Row(
                   children: [
-                    FocusScope(
-                      node: navScopeNode,
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: Container(
-                          width: 250,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                    Container(
+                      width: 220,
+                      decoration: BoxDecoration(
+                        color: theme.scaffoldBackgroundColor,
+                        border: Border(
+                          right: BorderSide(
+                            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      child: SafeArea(
+                        right: false,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Header: Logo on top-right (RTL)
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 24, top: 12, right: 4),
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(6),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFFF7A3C),
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: const Color(0xFFFF7A3C).withValues(alpha: 0.3),
-                                            blurRadius: 8,
-                                            offset: const Offset(0, 3),
-                                          ),
-                                        ],
-                                      ),
-                                      child: const Icon(Icons.wb_sunny_rounded, color: Colors.white, size: 22),
-                                    ),
-                                    const SizedBox(width: 10),
+                                    Assets.images.logo.svg(height: 28),
+                                    const Gap(10),
                                     Text(
-                                      "روزنه",
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w900,
-                                        color: Theme.of(context).colorScheme.onSurface,
+                                      t.common.appTitle,
+                                      style: theme.textTheme.titleMedium?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              // Menu Items List
+                              const Gap(20),
                               Expanded(
-                                child: ListView.builder(
-                                  itemCount: _actions(t, showProfilesAction, isMobileBreakpoint).length,
+                                child: ListView.separated(
+                                  itemCount: _desktopActions(t).length,
+                                  separatorBuilder: (_, __) => const Gap(4),
                                   itemBuilder: (context, index) {
-                                    final action = _actions(t, showProfilesAction, isMobileBreakpoint)[index];
-                                    final selectedIndex = _getSelectedIndex(isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex);
-                                    final isSelected = index == selectedIndex;
-                                    final isDark = Theme.of(context).brightness == Brightness.dark;
+                                    final action = _desktopActions(t)[index];
+                                    final selectedIndex = _getDesktopSelectedIndex(
+                                      isMobileBreakpoint,
+                                      showProfilesAction,
+                                      navigationShell.currentIndex,
+                                    );
+                                    final isSelected = selectedIndex == index;
 
-                                    return Container(
-                                      margin: const EdgeInsets.only(bottom: 12),
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        child: InkWell(
-                                          onTap: () => _onTap(context, ref, index, isMobileBreakpoint, showProfilesAction),
-                                          borderRadius: BorderRadius.circular(16),
-                                          child: AnimatedContainer(
-                                            duration: const Duration(milliseconds: 200),
-                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                            decoration: BoxDecoration(
-                                              color: isSelected
-                                                  ? (isDark ? const Color(0xFF3D271D) : const Color(0xFFFFF0E6))
-                                                  : (isDark
-                                                      ? Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5)
-                                                      : Colors.white),
-                                              borderRadius: BorderRadius.circular(16),
-                                              border: Border.all(
+                                    return Material(
+                                      color: isSelected
+                                          ? (isDark ? const Color(0xFFFF7A3C).withValues(alpha: 0.15) : const Color(0xFFFFE8D6))
+                                          : Colors.transparent,
+                                      borderRadius: BorderRadius.circular(14),
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(14),
+                                        onTap: () => _onDesktopTap(context, ref, index, isMobileBreakpoint, showProfilesAction),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                action.icon,
+                                                size: 20,
                                                 color: isSelected
-                                                    ? const Color(0xFFFFC2A6)
-                                                    : (isDark
-                                                        ? Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3)
-                                                        : const Color(0xFFF0E5DE)),
-                                                width: 1.2,
+                                                    ? const Color(0xFFFF7A3C)
+                                                    : theme.colorScheme.onSurfaceVariant,
                                               ),
-                                              boxShadow: [
-                                                BoxShadow(
+                                              const Gap(14),
+                                              Text(
+                                                action.title,
+                                                style: theme.textTheme.bodyMedium?.copyWith(
+                                                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                                                   color: isSelected
-                                                      ? const Color(0xFFFF7A3C).withValues(alpha: 0.15)
-                                                      : Colors.black.withValues(alpha: 0.03),
-                                                  blurRadius: isSelected ? 12 : 6,
-                                                  offset: const Offset(0, 3),
+                                                      ? const Color(0xFFFF7A3C)
+                                                      : theme.colorScheme.onSurface,
                                                 ),
-                                              ],
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    action.title,
-                                                    style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-                                                      color: isSelected
-                                                          ? const Color(0xFFFF7A3C)
-                                                          : Theme.of(context).colorScheme.onSurface,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  padding: const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: isSelected
-                                                        ? Colors.white
-                                                        : (isDark
-                                                            ? Theme.of(context).colorScheme.surfaceContainerHighest
-                                                            : const Color(0xFFF3F4F6)),
-                                                  ),
-                                                  child: Icon(
-                                                    action.icon,
-                                                    size: 20,
-                                                    color: isSelected
-                                                        ? const Color(0xFFFF7A3C)
-                                                        : Theme.of(context).colorScheme.onSurfaceVariant,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -202,21 +131,126 @@ class MyAdaptiveLayout extends HookConsumerWidget {
                   ],
                 ),
               ),
-        bottomNavigationBar: isMobileBreakpoint
-            ? FocusScope(
-                node: navScopeNode,
-                child: NavigationBar(
-                  selectedIndex: _getSelectedIndex(isMobileBreakpoint, showProfilesAction, navigationShell.currentIndex),
-                  destinations: _navDests(_actions(t, showProfilesAction, isMobileBreakpoint)),
-                  onDestinationSelected: (index) => _onTap(context, ref, index, isMobileBreakpoint, showProfilesAction),
-                ),
-              )
-            : null,
+        bottomNavigationBar: isMobileBreakpoint ? _buildMobileBottomNav(context, ref, isDark) : null,
       ),
     );
   }
 
-  int _getSelectedIndex(bool isMobileBreakpoint, bool showProfilesAction, int currentBranchIndex) {
+  Widget _buildMobileBottomNav(BuildContext context, WidgetRef ref, bool isDark) {
+    final currentIndex = navigationShell.currentIndex;
+
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 14),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF2A2A2E) : Colors.white,
+          borderRadius: BorderRadius.circular(36),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 20,
+              offset: const Offset(0, 4),
+            ),
+          ],
+          border: Border.all(
+            color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFFED7AA).withValues(alpha: 0.7),
+            width: 1.0,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // 1. Home Item
+            _buildNavItem(
+              context: context,
+              icon: Icons.home_rounded,
+              label: "خانه",
+              isSelected: currentIndex == 0,
+              onTap: () {
+                if (currentIndex != 0) {
+                  navigationShell.goBranch(0);
+                }
+              },
+            ),
+
+            // 2. Servers / Locations Item
+            _buildNavItem(
+              context: context,
+              icon: Icons.public_rounded,
+              label: "سرورها",
+              isSelected: false,
+              onTap: () {
+                context.pushNamed('proxies');
+              },
+            ),
+
+            // 3. Settings Item
+            _buildNavItem(
+              context: context,
+              icon: Icons.settings_rounded,
+              label: "تنظیمات",
+              isSelected: currentIndex == 1,
+              onTap: () {
+                if (currentIndex != 1) {
+                  navigationShell.goBranch(1);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(24),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? (isDark ? const Color(0xFFFF7A3C).withValues(alpha: 0.25) : const Color(0xFFFFE8D6))
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Icon(
+                icon,
+                size: 24,
+                color: isSelected ? const Color(0xFFFF7A3C) : theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const Gap(3),
+            Text(
+              label,
+              style: theme.textTheme.labelMedium?.copyWith(
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                color: isSelected ? const Color(0xFFFF7A3C) : theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  int _getDesktopSelectedIndex(bool isMobileBreakpoint, bool showProfilesAction, int currentBranchIndex) {
     final currentBranchName = getNameOfBranch(isMobileBreakpoint, showProfilesAction, currentBranchIndex);
     return switch (currentBranchName) {
       'home' => 0,
@@ -227,8 +261,7 @@ class MyAdaptiveLayout extends HookConsumerWidget {
     };
   }
 
-  // shell route action onTap
-  void _onTap(BuildContext context, WidgetRef ref, int actionIndex, bool isMobileBreakpoint, bool showProfilesAction) async {
+  Future<void> _onDesktopTap(BuildContext context, WidgetRef ref, int actionIndex, bool isMobileBreakpoint, bool showProfilesAction) async {
     if (actionIndex == 2) {
       // Feedback: Open support link
       final Uri uri = Uri.parse("https://t.me/roozaneh_support");
@@ -239,7 +272,7 @@ class MyAdaptiveLayout extends HookConsumerWidget {
     }
 
     if (actionIndex == 5) {
-      // Language: Trigger Hiddify's native language picker modal
+      // Language: Trigger native language picker modal
       final t = ref.read(translationsProvider).requireValue;
       final locale = ref.read(localePreferencesProvider);
       final selectedLocale = await ref
@@ -266,19 +299,16 @@ class MyAdaptiveLayout extends HookConsumerWidget {
     };
     final realBranchIndex = getIndexOfBranch(isMobileBreakpoint, showProfilesAction, targetBranchName);
     if (realBranchIndex >= 0) {
-      navigationShell.goBranch(realBranchIndex, initialLocation: realBranchIndex == navigationShell.currentIndex);
+      navigationShell.goBranch(realBranchIndex);
     }
   }
 
-  List<ShellRouteAction> _actions(Translations t, bool showProfilesAction, bool isMobileBreakpoint) => [
+  List<ShellRouteAction> _desktopActions(Translations t) => [
     ShellRouteAction(Icons.home_rounded, t.pages.home.title),
     ShellRouteAction(Icons.settings_rounded, t.pages.settings.title),
     ShellRouteAction(Icons.chat_bubble_outline_rounded, "بازخورد"),
-    if (!isMobileBreakpoint) ShellRouteAction(Icons.info_outline_rounded, t.pages.about.title),
-    if (!isMobileBreakpoint) ShellRouteAction(Icons.bar_chart_rounded, t.pages.logs.title),
+    ShellRouteAction(Icons.info_outline_rounded, t.pages.about.title),
+    ShellRouteAction(Icons.bar_chart_rounded, t.pages.logs.title),
     ShellRouteAction(Icons.language_rounded, "زبان"),
   ];
-
-  List<NavigationDestination> _navDests(List<ShellRouteAction> actions) =>
-      actions.map((e) => NavigationDestination(icon: Icon(e.icon), label: e.title)).toList();
 }

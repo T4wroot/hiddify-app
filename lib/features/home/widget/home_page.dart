@@ -30,13 +30,11 @@ class HomePage extends HookConsumerWidget {
                 children: [
                   Assets.images.logo.svg(height: 24),
                   const Gap(8),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(text: t.common.appTitle),
-                        const TextSpan(text: " "),
-                        const WidgetSpan(child: AppVersionLabel(), alignment: PlaceholderAlignment.middle),
-                      ],
+                  Text(
+                    t.common.appTitle,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                 ],
