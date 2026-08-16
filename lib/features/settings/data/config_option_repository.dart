@@ -139,7 +139,7 @@ abstract class ConfigOptions {
 
   static final mtu = PreferencesNotifier.create<int, int>("mtu", 9000);
 
-  static final strictRoute = PreferencesNotifier.create<bool, bool>("strict-route", true);
+  static final strictRoute = PreferencesNotifier.create<bool, bool>("strict-route", false);
 
   static final connectionTestUrl = PreferencesNotifier.create<String, String>(
     "connection-test-url",
