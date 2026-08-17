@@ -217,7 +217,24 @@ class AboutPage extends HookConsumerWidget {
                       AppUpdateStateChecking() => const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
                       _ => Icon(FluentIcons.arrow_sync_24_regular, color: theme.colorScheme.onSurfaceVariant, size: 20),
                     },
-                    onTap: () async => await ref.read(appUpdateNotifierProvider.notifier).check(),
+                    onTap: () async {
+                      final result = await ref.read(appUpdateNotifierProvider.notifier).check();
+                      if (!context.mounted) return;
+                      switch (result) {
+                        case AppUpdateStateAvailable(:final versionInfo) || AppUpdateStateIgnored(:final versionInfo):
+                          await ref.read(dialogNotifierProvider.notifier).showNewVersion(
+                                currentVersion: appInfo.presentVersion,
+                                newVersion: versionInfo,
+                                canIgnore: false,
+                              );
+                        case AppUpdateStateNotAvailable():
+                          CustomToast.success(t.pages.about.notAvailableMsg).show(context);
+                        case AppUpdateStateError(:final error):
+                          CustomToast.error(t.presentShortError(error)).show(context);
+                        default:
+                          break;
+                      }
+                    },
                   ),
                 if (PlatformUtils.isDesktop)
                   buildTileCard(

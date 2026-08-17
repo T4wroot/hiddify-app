@@ -64,10 +64,24 @@ class AppUpdateNotifier extends _$AppUpdateNotifier with AppLogger {
             return state = AppUpdateState.error(err);
           },
           (remote) {
+            if (remote == null) {
+              loggy.info("no remote version available");
+              return state = const AppUpdateState.notAvailable();
+            }
             try {
-              final latestVersion = Version.parse(remote.version);
-              final currentVersion = Version.parse(appInfo.version);
-              if (latestVersion > currentVersion) {
+              Version? latestVersion;
+              try {
+                latestVersion = Version.parse(remote.version);
+              } catch (_) {}
+
+              Version? currentVersion;
+              try {
+                currentVersion = Version.parse(appInfo.version);
+              } catch (_) {
+                currentVersion = Version(0, 0, 0);
+              }
+
+              if (latestVersion != null && latestVersion > currentVersion) {
                 if (remote.version == _ignoreReleasePref.read()) {
                   loggy.debug("ignored release [${remote.version}]");
                   return state = AppUpdateStateIgnored(remote);

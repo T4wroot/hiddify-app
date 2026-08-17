@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:roozaneh/core/http_client/dio_http_client.dart';
 import 'package:roozaneh/core/model/constants.dart';
@@ -9,7 +10,7 @@ import 'package:roozaneh/features/app_update/model/remote_version_entity.dart';
 import 'package:roozaneh/utils/utils.dart';
 
 abstract interface class AppUpdateRepository {
-  TaskEither<AppUpdateFailure, RemoteVersionEntity> getLatestVersion({
+  TaskEither<AppUpdateFailure, RemoteVersionEntity?> getLatestVersion({
     bool includePreReleases = false,
     Release release = Release.general,
   });
@@ -21,7 +22,7 @@ class AppUpdateRepositoryImpl with ExceptionHandler, InfraLogger implements AppU
   final DioHttpClient httpClient;
 
   @override
-  TaskEither<AppUpdateFailure, RemoteVersionEntity> getLatestVersion({
+  TaskEither<AppUpdateFailure, RemoteVersionEntity?> getLatestVersion({
     bool includePreReleases = false,
     Release release = Release.general,
   }) {
@@ -30,17 +31,31 @@ class AppUpdateRepositoryImpl with ExceptionHandler, InfraLogger implements AppU
         throw Exception("custom update checkers are not supported");
       }
       final response = await httpClient.get<List>(Constants.githubReleasesApiUrl);
-      if (response.statusCode != 200 || response.data == null) {
+      if (response.statusCode != 200 || response.data == null || response.data!.isEmpty) {
         loggy.warning("failed to fetch latest version info");
-        return left(const AppUpdateFailure.unexpected());
+        return right(null);
       }
 
-      final releases = response.data!.map((e) => GithubReleaseParser.parse(e as Map<String, dynamic>));
-      late RemoteVersionEntity latest;
+      final releases = response.data!
+          .map((e) {
+            try {
+              return GithubReleaseParser.parse(e as Map<String, dynamic>);
+            } catch (_) {
+              return null;
+            }
+          })
+          .whereType<RemoteVersionEntity>()
+          .toList();
+
+      if (releases.isEmpty) {
+        return right(null);
+      }
+
+      RemoteVersionEntity? latest;
       if (includePreReleases) {
-        latest = releases.first;
+        latest = releases.firstOrNull;
       } else {
-        latest = releases.firstWhere((e) => e.preRelease == false);
+        latest = releases.firstWhereOrNull((e) => !e.preRelease) ?? releases.firstOrNull;
       }
       return right(latest);
     }, AppUpdateFailure.unexpected);

@@ -6,11 +6,11 @@
   <group>
     <!-- Sun Center Circle -->
     <path
-        android:fillColor="#FFFFFFFF"
+        android:fillColor="#FFFFA726"
         android:pathData="M54,54m-16,0a16,16 0,1 1,32 0a16,16 0,1 1,-32 0"/>
     <!-- Sun 8 Radiant Rays -->
     <path
-        android:strokeColor="#FFFFFFFF"
+        android:strokeColor="#FFFFB74D"
         android:strokeWidth="5"
         android:strokeLineCap="round"
         android:pathData="M54,23 L54,30 M54,78 L54,85 M23,54 L30,54 M78,54 L85,54 M32,32 L37,37 M71,71 L76,76 M32,76 L37,71 M71,37 L76,32"/>
