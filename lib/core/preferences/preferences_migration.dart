@@ -86,6 +86,10 @@ class PreferencesVersion1Migration extends PreferencesMigrationStep with InfraLo
     await sharedPreferences.remove("set-system-proxy");
 
     await sharedPreferences.remove("cron_profiles_update");
+
+    if (sharedPreferences.getString("region") == null || sharedPreferences.getString("region") == "other") {
+      await sharedPreferences.setString("region", "ir");
+    }
   }
 
   String _ipv6Mapper(String persisted) => switch (persisted) {
