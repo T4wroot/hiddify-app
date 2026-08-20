@@ -90,6 +90,10 @@ class PreferencesVersion1Migration extends PreferencesMigrationStep with InfraLo
     if (sharedPreferences.getString("region") == null || sharedPreferences.getString("region") == "other") {
       await sharedPreferences.setString("region", "ir");
     }
+
+    if (sharedPreferences.getInt("mtu") == null || sharedPreferences.getInt("mtu") == 9000) {
+      await sharedPreferences.setInt("mtu", 1500);
+    }
   }
 
   String _ipv6Mapper(String persisted) => switch (persisted) {

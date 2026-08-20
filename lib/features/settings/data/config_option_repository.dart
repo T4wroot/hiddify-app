@@ -137,7 +137,7 @@ abstract class ConfigOptions {
     mapTo: (value) => value.name,
   );
 
-  static final mtu = PreferencesNotifier.create<int, int>("mtu", 9000);
+  static final mtu = PreferencesNotifier.create<int, int>("mtu", 1500);
 
   static final strictRoute = PreferencesNotifier.create<bool, bool>("strict-route", false);
 
