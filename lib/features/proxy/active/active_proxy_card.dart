@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:roozaneh/core/model/constants.dart';
@@ -7,8 +8,10 @@ import 'package:roozaneh/features/connection/model/connection_status.dart';
 import 'package:roozaneh/features/connection/notifier/connection_notifier.dart';
 import 'package:roozaneh/features/proxy/active/active_proxy_notifier.dart';
 import 'package:roozaneh/features/proxy/active/ip_widget.dart';
+import 'package:roozaneh/features/stats/notifier/stats_notifier.dart';
 import 'package:roozaneh/hiddifycore/generated/v2/hcore/hcore.pb.dart';
 import 'package:roozaneh/utils/custom_loggers.dart';
+import 'package:roozaneh/utils/number_formatters.dart';
 
 class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
   const ActiveProxyFooter({super.key});
@@ -20,6 +23,7 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
     );
 
     final activeProxy = ref.watch(activeProxyNotifierProvider.select((value) => value.valueOrNull));
+    final stats = ref.watch(statsNotifierProvider).asData?.value ?? SystemInfo.create();
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final isConnected = connectionState == const Connected() && activeProxy != null;
@@ -41,127 +45,152 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
     final delayText = hasPing ? "${activeProxy.urlTestDelay} ms" : "---";
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // 1. Label + Country Selection Dropdown Pill
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8, bottom: 6),
-              child: Text(
-                "اتصال از طریق",
-                style: theme.textTheme.labelMedium?.copyWith(
-                  color: isConnected ? const Color(0xFFFF7A3C) : theme.colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            InkWell(
-              borderRadius: BorderRadius.circular(18),
-              onTap: () => context.goNamed('proxies'),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-                decoration: BoxDecoration(
-                  color: isDark ? theme.colorScheme.surfaceContainerHighest : Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: const Color(0xFFFED7AA),
-                    width: 1.5,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.03),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    IPCountryFlag(
-                      countryCode: countryCode,
-                      organization: activeProxy?.ipinfo.org ?? "",
-                      size: 32,
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Text(
-                        countryName,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: theme.colorScheme.onSurfaceVariant,
-                      size: 26,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-
-        // 3. Latency & Stability Bar
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: isDark ? theme.colorScheme.surfaceContainerHighest : Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: theme.colorScheme.outline.withValues(alpha: 0.1),
+        Padding(
+          padding: const EdgeInsets.only(right: 8, bottom: 6),
+          child: Text(
+            "موقعیت سرور",
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: isConnected ? const Color(0xFFFF7A3C) : theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: isDark ? theme.colorScheme.surfaceContainerHighest : Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: isDark
+                  ? theme.colorScheme.outline.withValues(alpha: 0.15)
+                  : const Color(0xFFFED7AA).withValues(alpha: 0.8),
+              width: 1.2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
+                blurRadius: 12,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.signal_cellular_alt_rounded,
-                    size: 16,
-                    color: Color(0xFFFF7A3C),
+              // 1. Server Selector Tile
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.vertical(
+                    top: const Radius.circular(20),
+                    bottom: Radius.circular(isConnected ? 0 : 20),
                   ),
-                  const SizedBox(width: 6),
-                  Text(
-                    delayText,
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                  onTap: () => context.goNamed('proxies'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    child: Row(
+                      children: [
+                        IPCountryFlag(
+                          countryCode: countryCode,
+                          organization: activeProxy?.ipinfo.org ?? "",
+                          size: 34,
+                        ),
+                        const Gap(12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                countryName,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const Gap(2),
+                              Text(
+                                isConnected && activeProxy.ipinfo.ip.isNotEmpty
+                                    ? activeProxy.ipinfo.ip
+                                    : "تغییر و انتخاب سرور",
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                          size: 16,
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
-              Container(
-                height: 16,
-                width: 1,
-                color: theme.colorScheme.outline.withValues(alpha: 0.2),
-              ),
-              Row(
-                children: [
-                  Text(
-                    isConnected ? "پایدار" : "قطع",
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
+
+              // 2. Integrated Live Stats Strip (Ping, Upload, Download) when connected
+              if (isConnected) ...[
+                Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: isDark
+                      ? theme.colorScheme.outline.withValues(alpha: 0.12)
+                      : theme.colorScheme.outline.withValues(alpha: 0.08),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  child: Row(
+                    children: [
+                      // Ping
+                      Expanded(
+                        child: _StatMetric(
+                          label: "پینگ",
+                          value: delayText,
+                          valueColor: hasPing ? const Color(0xFF22C55E) : null,
+                          icon: Icons.speed_rounded,
+                          iconColor: const Color(0xFF3B82F6),
+                        ),
+                      ),
+                      Container(
+                        height: 24,
+                        width: 1,
+                        color: theme.colorScheme.outline.withValues(alpha: 0.15),
+                      ),
+                      // Upload
+                      Expanded(
+                        child: _StatMetric(
+                          label: "آپلود",
+                          value: stats.uplink.toInt().speed(),
+                          valueColor: const Color(0xFFFF7A3C),
+                          icon: Icons.arrow_upward_rounded,
+                          iconColor: const Color(0xFFFF7A3C),
+                        ),
+                      ),
+                      Container(
+                        height: 24,
+                        width: 1,
+                        color: theme.colorScheme.outline.withValues(alpha: 0.15),
+                      ),
+                      // Download
+                      Expanded(
+                        child: _StatMetric(
+                          label: "دانلود",
+                          value: stats.downlink.toInt().speed(),
+                          valueColor: const Color(0xFF22C55E),
+                          icon: Icons.arrow_downward_rounded,
+                          iconColor: const Color(0xFF22C55E),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 6),
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: isConnected ? const Color(0xFF22C55E) : theme.colorScheme.outline,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ],
           ),
         ),
@@ -170,12 +199,56 @@ class ActiveProxyFooter extends ConsumerWidget with InfraLogger {
   }
 }
 
-String getRealOutboundTag(OutboundInfo group) {
-  var tag = group.tagDisplay;
-  if (group.groupSelectedTagDisplay != "" && group.groupSelectedTagDisplay != tag) {
-    tag = "$tag → ${group.groupSelectedTagDisplay}";
+class _StatMetric extends StatelessWidget {
+  const _StatMetric({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.iconColor,
+    this.valueColor,
+  });
+
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color iconColor;
+  final Color? valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 13, color: iconColor),
+            const Gap(4),
+            Text(
+              label,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
+                fontSize: 11,
+              ),
+            ),
+          ],
+        ),
+        const Gap(2),
+        Text(
+          value,
+          textDirection: TextDirection.ltr,
+          style: theme.textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
+            color: valueColor ?? theme.colorScheme.onSurface,
+          ),
+        ),
+      ],
+    );
   }
-  return tag;
 }
 
 // class _StatsColumn extends HookConsumerWidget {

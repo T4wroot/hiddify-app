@@ -4,10 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:roozaneh/core/router/dialog/dialog_notifier.dart';
 import 'package:roozaneh/features/connection/model/connection_status.dart';
 import 'package:roozaneh/features/connection/notifier/connection_notifier.dart';
+import 'package:roozaneh/features/home/widget/sun_widget.dart';
 import 'package:roozaneh/features/profile/notifier/active_profile_notifier.dart';
 import 'package:roozaneh/features/profile/notifier/profile_notifier.dart';
 import 'package:roozaneh/features/settings/notifier/config_option/config_option_notifier.dart';
-import 'package:roozaneh/gen/assets.gen.dart';
 
 class ConnectionButton extends HookConsumerWidget {
   const ConnectionButton({super.key});
@@ -67,180 +67,102 @@ class _ConnectionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+
+    final SunConnectionState sunState;
+    if (isConnecting) {
+      sunState = SunConnectionState.connecting;
+    } else if (isDisconnecting) {
+      sunState = SunConnectionState.disconnecting;
+    } else if (isConnected) {
+      sunState = SunConnectionState.connected;
+    } else {
+      sunState = SunConnectionState.disconnected;
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // 1. Central Status Circle (Pulsing/Spinner during connecting, Checkmark when connected, Sun when disconnected)
-        Semantics(
-          button: true,
+        // 1. Central 3D Glowing Sun with Orbital Rings & Sparkles
+        RoozanehSunWidget(
+          key: const ValueKey("home_connection_button"),
+          connectionState: sunState,
           enabled: enabled,
-          label: isConnecting
-              ? "در حال اتصال"
-              : isConnected
-                  ? "متصل است"
-                  : "متصل نیست",
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Outer Glow
-              Container(
-                width: 125,
-                height: 125,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 28,
-                      spreadRadius: isConnecting ? 6 : 3,
-                      color: isConnected
-                          ? const Color(0xFF22C55E).withValues(alpha: 0.32)
-                          : const Color(0xFFFF7A3C).withValues(alpha: isConnecting ? 0.45 : 0.28),
-                    ),
-                  ],
-                ),
-              ),
+          onTap: onTap,
+          size: 210,
+        ),
 
-              // Connecting Progress Ring
-              if (isConnecting || isDisconnecting)
-                const SizedBox(
-                  width: 125,
-                  height: 125,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 3.5,
-                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF7A3C)),
-                  ),
-                ),
+        const Gap(10),
 
-              // Core Circle Material Button
-              Container(
-                width: 112,
-                height: 112,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isDark ? theme.colorScheme.surfaceContainerHighest : Colors.white,
-                ),
-                child: Material(
-                  key: const ValueKey("home_connection_button"),
-                  shape: const CircleBorder(),
-                  color: Colors.transparent,
-                  child: InkWell(
-                    focusColor: Colors.grey.withValues(alpha: 0.2),
-                    onTap: onTap,
-                    child: Padding(
-                      padding: const EdgeInsets.all(22),
-                      child: isConnected
-                          ? const Icon(
-                              Icons.check_circle_outline_rounded,
-                              color: Color(0xFF22C55E),
-                              size: 60,
-                            )
-                          : Assets.images.sunIcon.svg(
-                              colorFilter: ColorFilter.mode(
-                                isConnecting ? const Color(0xFFFF9E66) : const Color(0xFFFF7A3C),
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                    ),
+        // 2. Status Dot & Text (Matching Mockup)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 9,
+              height: 9,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isConnected
+                    ? const Color(0xFF22C55E)
+                    : isConnecting
+                        ? const Color(0xFFFF9E66)
+                        : const Color(0xFFFF7A3C),
+                boxShadow: [
+                  BoxShadow(
+                    color: (isConnected
+                            ? const Color(0xFF22C55E)
+                            : const Color(0xFFFF7A3C))
+                        .withValues(alpha: 0.6),
+                    blurRadius: 6,
+                    spreadRadius: 1.5,
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
+            const Gap(8),
+            Text(
+              isConnecting
+                  ? "در حال اتصال..."
+                  : isDisconnecting
+                      ? "در حال قطع اتصال..."
+                      : isConnected
+                          ? "متصل است"
+                          : "متصل نیست",
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                letterSpacing: 0.5,
+                color: isConnected
+                    ? const Color(0xFF22C55E)
+                    : isConnecting
+                        ? const Color(0xFFFF9E66)
+                        : theme.colorScheme.onSurface,
+              ),
+            ),
+          ],
+        ),
+
+        const Gap(4),
+
+        // Subtitle
+        Text(
+          isConnecting
+              ? "در حال برقراری ارتباط امن و انتخاب سرور..."
+              : isDisconnecting
+                  ? "لطفاً چند لحظه صبر کنید"
+                  : isConnected
+                      ? "اتصال شما امن و پایدار است"
+                      : "برای اتصال ضربه بزنید",
+          style: theme.textTheme.labelMedium?.copyWith(
+            fontSize: 13,
+            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
           ),
         ),
 
-        const Gap(14),
-
-        // 2. Status Title & Subtitle
-        if (isConnecting) ...[
-          Text(
-            "روزنه در حال اتصال...",
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: const Color(0xFFFF7A3C),
-            ),
-          ),
-          const Gap(4),
-          Text(
-            "در حال برقراری ارتباط امن و انتخاب سرور...",
-            style: theme.textTheme.labelMedium?.copyWith(
-              fontSize: 13,
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
-            ),
-          ),
-        ] else if (isDisconnecting) ...[
-          Text(
-            "در حال قطع اتصال...",
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: theme.colorScheme.onSurface,
-            ),
-          ),
-          const Gap(4),
-          Text(
-            "لطفاً چند لحظه صبر کنید",
-            style: theme.textTheme.labelMedium?.copyWith(
-              fontSize: 13,
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
-            ),
-          ),
-        ] else if (isConnected) ...[
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: "روزنه ",
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: theme.colorScheme.onSurface,
-                  ),
-                ),
-                const TextSpan(
-                  text: "متصل است",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Color(0xFF22C55E),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Gap(4),
-          Text(
-            "اتصال شما امن و پایدار است",
-            style: theme.textTheme.labelMedium?.copyWith(
-              fontSize: 13,
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
-            ),
-          ),
-        ] else ...[
-          Text(
-            "روزنه متصل نیست",
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: theme.colorScheme.onSurface,
-            ),
-          ),
-          const Gap(4),
-          Text(
-            "برای اتصال ضربه بزنید",
-            style: theme.textTheme.labelMedium?.copyWith(
-              fontSize: 13,
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
-            ),
-          ),
-        ],
-
         const Gap(16),
 
-        // 3. Primary CTA Action Button
+        // 3. Primary Action Button
         ElevatedButton(
           onPressed: (isConnecting || isDisconnecting) ? null : onTap,
           style: ElevatedButton.styleFrom(
@@ -250,11 +172,11 @@ class _ConnectionButton extends StatelessWidget {
             disabledBackgroundColor: const Color(0xFFFF7A3C).withValues(alpha: 0.7),
             foregroundColor: Colors.white,
             disabledForegroundColor: Colors.white,
-            minimumSize: const Size(260, 52),
+            minimumSize: const Size(260, 50),
             elevation: (isConnecting || isDisconnecting) ? 0 : 4,
             shadowColor: const Color(0xFFFF7A3C).withValues(alpha: 0.4),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(26),
+              borderRadius: BorderRadius.circular(25),
             ),
           ),
           child: (isConnecting || isDisconnecting)
@@ -275,7 +197,7 @@ class _ConnectionButton extends StatelessWidget {
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 17,
+                        fontSize: 16,
                       ),
                     ),
                   ],
@@ -285,7 +207,7 @@ class _ConnectionButton extends StatelessWidget {
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 17,
                   ),
                 ),
         ),

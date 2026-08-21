@@ -1,15 +1,13 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:roozaneh/core/app_info/app_info_provider.dart';
 import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/router/go_router/helper/active_breakpoint_notifier.dart';
 import 'package:roozaneh/features/home/widget/connection_button.dart';
 import 'package:roozaneh/features/proxy/active/active_proxy_card.dart';
-import 'package:roozaneh/core/router/go_router/helper/active_breakpoint_notifier.dart';
 import 'package:roozaneh/gen/assets.gen.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:roozaneh/features/stats/widget/live_speed_gauge.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
@@ -67,8 +65,7 @@ class HomePage extends HookConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ConnectionButton(),
-                    LiveSpeedGauge(),
-                    Gap(12),
+                    Gap(18),
                     ActiveProxyFooter(),
                   ],
                 ),
