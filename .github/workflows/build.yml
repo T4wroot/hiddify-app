@@ -119,8 +119,10 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Import Apple Codesign Certificates
-        if: ${{ inputs.upload-artifact && startsWith(matrix.os,'macos') && secrets.APPLE_CERTIFICATE_P12 != '' }}
+        if: ${{ inputs.upload-artifact && startsWith(matrix.os,'macos') }}
         continue-on-error: true
+        env:
+          APPLE_CERT: ${{ secrets.APPLE_CERTIFICATE_P12 }}
         uses: apple-actions/import-codesign-certs@v6
         with: 
             p12-file-base64: "${{ secrets.APPLE_CERTIFICATE_P12 }}"
@@ -272,8 +274,10 @@ jobs:
           make ${{ matrix.platform }}-release
 
       - name: Code Sign
-        if: ${{ inputs.upload-artifact && startsWith(matrix.platform,'windows') && secrets.WINDOWS_SIGNING_KEY != '' }}
+        if: ${{ inputs.upload-artifact && startsWith(matrix.platform,'windows') }}
         continue-on-error: true
+        env:
+          SIGNING_KEY: ${{ secrets.WINDOWS_SIGNING_KEY }}
         uses: hiddify/signtool-code-sign-sha256@main
         with:
           certificate: '${{ secrets.WINDOWS_SIGNING_KEY }}'
@@ -474,12 +478,15 @@ jobs:
           files: ./out/*
 
       - name: Create service_account.json
-        if: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON != '' }}
-        run: echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}' > service_account.json
+        continue-on-error: true
+        run: |
+          if [ -n "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}" ]; then
+            echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}' > service_account.json
+          fi
 
       - name: Deploy to Google Play Internal Testers
-        if: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON != '' }}
         continue-on-error: true
+        if: ${{ hashFiles('service_account.json') != '' }}
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: service_account.json
@@ -491,7 +498,8 @@ jobs:
 
   upload-to-testflight:
     needs: [build]
-    if: ${{ inputs.upload-artifact && inputs.tag-name != 'draft' && secrets.APPLE_UPLOAD_CERTIFICATE_P12 != '' }}
+    continue-on-error: true
+    if: ${{ inputs.upload-artifact && inputs.tag-name != 'draft' }}
     runs-on: macOS-latest
     timeout-minutes: 30
     steps:
