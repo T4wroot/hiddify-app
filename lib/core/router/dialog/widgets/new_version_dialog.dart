@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:roozaneh/core/localization/translations.dart';
+import 'package:roozaneh/core/model/constants.dart';
 import 'package:roozaneh/features/app_update/model/remote_version_entity.dart';
 import 'package:roozaneh/features/app_update/notifier/app_update_notifier.dart';
 import 'package:roozaneh/utils/utils.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NewVersionDialog extends HookConsumerWidget with PresLogger {
   NewVersionDialog(this.currentVersion, this.newVersion, {super.key, this.canIgnore = true});
@@ -57,7 +58,11 @@ class NewVersionDialog extends HookConsumerWidget with PresLogger {
         TextButton(onPressed: context.pop, child: Text(t.common.later)),
         TextButton(
           onPressed: () async {
-            await UriUtils.tryLaunch(Uri.parse(newVersion.url));
+            String downloadUrl = newVersion.url;
+            if (PlatformUtils.isAndroid && newVersion.releaseTag.isNotEmpty) {
+              downloadUrl = "${Constants.githubUrl}/releases/download/${newVersion.releaseTag}/Roozaneh-Android-universal.apk";
+            }
+            await UriUtils.tryLaunch(Uri.parse(downloadUrl));
           },
           child: Text(t.dialogs.newVersion.updateNow),
         ),
